@@ -1,0 +1,245 @@
+.auth_body {
+    width: 100%;
+    height: 100%;
+}
+
+.auth_wraper {
+    height: 100%;
+    display: flex;
+    background-color: rgb(248 250 252 / 1);
+}
+
+.auth_wraper .left {
+    width: 50%;
+    position: relative;
+}
+
+.auth_wraper .right {
+    width: 50%;
+}
+
+.auth_wraper .left svg.border {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.auth_wraper .left .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.auth_wraper .left .logo img {
+    width: 35%;
+}
+
+.auth_form_body {
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.auth_form_body .heading {
+    width: 100%;
+}
+
+.auth_form_body .heading h1 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 28px;
+    color: #111827;
+}
+
+.auth_form_body .heading p {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: #111827;
+}
+
+.auth_form_body .heading p span {
+    color: var(--primary-color);
+}
+
+.auth_form_body form {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.auth_form_body form .form-group {
+    margin-bottom: 10px;
+}
+
+.auth_form_body form .form-group label {
+    font-weight: 500;
+    color: #111827;
+    font-family: var(--family);
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.auth_form_body form .input-wrap {
+    position: relative;
+}
+
+.auth_form_body form .input-wrap input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    padding: 10px 15px 10px 19px;
+    border-radius: 3px;
+    outline: none;
+    color: #111827;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+
+.eye-btn svg {
+    cursor: pointer;
+    color: #475569;
+}
+
+.passLbl_forgotBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.passLbl_forgotBtn a {
+    display: inline-block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    font-family: var(--family);
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.auth-form-btn .site-btn {
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: #fff;
+    font-family: var(--family);
+    font-size: 14px;
+}
+
+.platform {
+    text-align: left;
+    width: 100%;
+    font-family: var(--family);
+    font-size: 12px;
+}
+
+.platform span {
+    color: #6b7280;
+    margin-right: 5px;
+}
+
+.platform a {
+    color: var(--primary-color);
+    text-decoration: none;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+
+/* Right side slider */
+.auth_wraper .right .slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth_wraper .right .slide {
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.auth_wraper .right .slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.auth_wraper .right .slide:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(88, 28, 135, .5);
+}
+
+.auth_wraper .right .content {
+    text-align: center;
+    padding-bottom: 50px;
+    position: relative;
+}
+
+.auth_wraper .right .content h2 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    color: #fff;
+}
+
+.auth_wraper .right .content p {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    color: #fff;
+}
+
+.auth_wraper .right .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .auth_wraper .right .nav-left {
+    left: 10px;
+  }
+  .auth_wraper .right .nav-right {
+    right: 10px;
+  }
+  
