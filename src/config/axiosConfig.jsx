@@ -1,7 +1,9 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import useUserStore from '@/stores/useUserStore';
+import { isTokenExpired } from '@helper/tokenExpire';
 
-const BASE_URL = 'http://localhost:3055/v1';
+const BASE_URL = 'http://localhost:5000/api';
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -10,7 +12,7 @@ const api = axios.create({
     },
   });
 
-  export const axiosPrivate = axios.create({
+export const axiosPrivate = axios.create({
 	baseURL: BASE_URL,
 	headers: { 'Content-Type': 'application/json' },
 	withCredentials: true,
@@ -20,19 +22,19 @@ const api = axios.create({
 api.interceptors.request.use(
 	async (request) => {
 
-		const account = await store.getState().auth;
-		const isAuthenticated = account?.isAuthenticated;
-		const token = account?.token;
+		const { token, isAuthenticated, logout } = useUserStore.getState();
 
-		if (token && isAuthenticated) {
-			if (isTokenExpired(token)) {
-				toast.error('Session expired, please login again!');
-				store.dispatch(logout());
-				throw new axios.Cancel('Token expired, user logged out.');
-			}
-            request.headers["xt-user-token"] = token;
-            request.headers["xt-client-token"] = token;
-        }
+		if (!token || !isAuthenticated) {
+			return request;
+		}
+
+		if (isTokenExpired(token)) {
+			toast.error("Session expired, please login again!");
+			logout();
+			throw new axios.Cancel("Token expired, user logged out.");
+		}
+
+		request.headers["Authorization"] = `Bearer ${token}`;
 
 		return request;
 	},
@@ -43,9 +45,10 @@ api.interceptors.request.use(
 api.interceptors.response.use(
 	(response) => response,
 	async (error) => {
-	  if (error.response && error.response.status === 401) {
+	  const requestUrl = error?.config?.url;
+	  if (error.response && error.response.status === 401 && !requestUrl.includes('/auth/login')) {
 		toast.error("Un Authenticated!");
-		store.dispatch(logout());
+		useUserStore.getState().logout();
 	  }
   
 	  return Promise.reject(error);

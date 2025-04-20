@@ -1,20 +1,15 @@
-import React from 'react'
-// import { useSelector } from 'react-redux';
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
+import useUserStore from '@/stores/useUserStore'; 
 
 const AuthLayout = () => {
+  const { token } = useUserStore();
 
-  //const { token } = useSelector((state) => state.auth);
+  if (token) {
+    return <Navigate to="/dashboard/home" replace />;
+  }
 
-//   if (token) {
-//       return <Navigate to={'/dashboard/home'} replace />;
-//   }
+  return <Outlet />;
+};
 
-  return (
-    <>
-        <Outlet />
-    </>
-  )
-}
-
-export default AuthLayout
+export default AuthLayout;
