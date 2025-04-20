@@ -1,39 +1,25 @@
-// import { create } from 'zustand'
-
-// const useUserStore = create((set) => ({
-//   user: null,
-//   token: null,
-//   isAuthenticated: false,
-
-//   setUser: ({ token, user }) => set({
-//     user,
-//     token,
-//     isAuthenticated: true,
-//   }),
-
-//   logout: () => set({
-//     user: null,
-//     token: null,
-//     isAuthenticated: false,
-//   }),
-  
-// }))
-
-
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
-const useUserStore = create(devtools((set) => ({
-  user: null,
-  token: null,
-  isAuthenticated: false,
+const useUserStore = create(
+  devtools(
+    persist(
+      (set) => ({
+        user: null,
+        token: null,
+        isAuthenticated: false,
 
-  setUser: ({ user, token }) => set({ user, token, isAuthenticated: true }),
-  logout: () => set({ user: null, token: null, isAuthenticated: false }),
-  
-},
-{ name: '🧠 UserStore' }
-)));
+        setUser: ({ user, token }) => set({ user, token, isAuthenticated: true }),
 
+        logout: () =>
+          set({ user: null, token: null, isAuthenticated: false }),
+      }),
+      {
+        name: 'user-store',
+      }
+    ),
+    { name: '🧠 POS' }
+  )
+);
 
-export default useUserStore
+export default useUserStore;

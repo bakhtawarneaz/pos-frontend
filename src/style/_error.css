@@ -1,0 +1,36 @@
+.not_found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.not_found h1 {
+    font-size: 45px;
+    font-family: var(--family);
+    font-weight: 700;
+    color: #000;
+}
+
+.not_found p {
+    font-size: 20px;
+    font-family: var(--family);
+    font-weight: 400;
+    color: #000000;
+    margin: 0 0 30px;
+    text-transform: capitalize;
+}
+
+.not_found a {
+    padding: 8px 25px;
+    border: 0;
+    background: var(--primary-color);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    font-family: var(--family);
+    font-weight: 400;
+    text-transform: capitalize;
+    text-decoration: none;
+    display: inline-block;
+}
