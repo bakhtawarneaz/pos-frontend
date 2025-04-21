@@ -8,8 +8,8 @@
 .sidebar {
     transition: all 0.2s, background 0s;
     position: relative;
-    background: var(--primary-color);
-    box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+    background: #f4f4f566;
+    border-right: 1px solid #e4e4e7;
 }
 
 .sider {
@@ -22,10 +22,11 @@
 }
 
 .sidebar_logo {
-    padding: 20px 20px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 10px;
+    border-bottom: 1px solid #e4e4e7;
 }
 
 .sidebar_logo .site_logo {
@@ -40,7 +41,7 @@
 }
 
 .sidebar_logo h1 {
-    color: #fff;
+    color: var(--primary-color);
     text-transform: uppercase;
     font-size: 30px;
     font-family: var(--family);
@@ -56,7 +57,7 @@
 .toggle_sidebar .toggle_icon {
     height: 40px;
     width: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #f4f4f5;
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -65,12 +66,13 @@
 }
 
 .toggle_sidebar .toggle_icon svg {
-    color: #fff;
+    color: #000;
     font-size: 22px;
 }
 
 .sidebar_menu {
     padding: 0 20px;
+    margin-top: 15px;
 }
 
 .sidebar_menu li {
@@ -81,7 +83,7 @@
 .sidebar_menu li a {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding: 12px 10px;
     border-radius: 12px;
     text-decoration: none;
@@ -89,28 +91,65 @@
 }
 
 .sidebar_menu li a.active {
-    background: linear-gradient(45deg, #202f5f, #6d7cac);
+    background: #f4f4f5;
+}
+
+.sidebar_menu li a.active span{
+    color: var(--primary-color);
+}
+
+.sidebar_menu li a.active svg{
+    color: var(--primary-color);
 }
 
 .sidebar_menu li a svg {
-    font-size: 20px;
+    font-size: 16px;
     margin-right: 15px;
-    color: #fff;
+    color: #71717a;
     transition: 0.5s all;
 }
 
 .sidebar_menu li a span {
     font-family: var(--family);
     font-weight: 400;
-    font-size: 16px;
-    color: #fff;
+    font-size: 14px;
+    color: #71717a;
     transform: scale(1);
     transition: 0.5s all;
 }
 
+.side_profile {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px;
+    width: 100%;
+    z-index: 99;
+}
+
+.side_profile .avatar {
+    width: 40px;
+}
+
+.side_profile .content .name {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: #000000;
+    text-transform: capitalize;
+}
+
+.side_profile .logout {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 12px;
+    color: #71717a;
+}
+
 .site_main {
     width: calc(100% - 300px);
-    background: #ededed;
     display: flex;
     flex-direction: column;
 }
@@ -192,7 +231,7 @@
 
 .sidebar.collapsed .sidebar_menu li a {
     display: block;
-    padding: 15px 10px;
+    padding: 10px 10px;
     text-align: center;
 }
 
@@ -204,16 +243,25 @@
 
 .sidebar.collapsed .sidebar_menu li a svg {
     margin: 0;
-    font-size: 25px;
+    font-size: 20px;
     transition: 0.5s all;
+}
+
+.sidebar.collapsed .side_profile {
+    padding: 0 10px;
+    justify-content: center;
+}
+
+.sidebar.collapsed .content {
+    display: none;
 }
 
 /*************** Header *********************/
 
 .main_header {
-    padding: 15px;
-    background: #fff;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 13.5px;
+    border-bottom: 1px solid #e4e4e7;
+    background: #f4f4f566;
     display: flex;
     align-items: center;
 }
@@ -228,7 +276,7 @@
 .header_left .toggle_icon {
     height: 40px;
     width: 40px;
-    background-color: rgb(32 47 95 / 11%);
+    background-color: #f4f4f5;
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -237,7 +285,7 @@
 }
 
 .header_left .toggle_icon svg {
-    color: var(--primary-color);
+    color: #000;
     font-size: 22px;
 }
 
@@ -248,6 +296,7 @@
     text-transform: capitalize;
     display: flex;
     align-items: center;
+    color: #000;
 }
 
 .header_left h4 span {
@@ -280,9 +329,88 @@
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+    padding-right: 20px;
+    position: relative;
 }
 
-.profile_cover .icon {
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.user-info .avatar {
+    width: 40px;
+}
+
+.user-text .name {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.user-text .email {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: capitalize;
+    color: #71717a;
+}
+
+.user-info svg.lucide {
+    color: #71717a;
+    width: 15px;
+}
+
+.profile_cover .dropdown {
+    position: absolute;
+    right: 20px;
+    top: 100%;
+    margin-top: 17px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    z-index: 1000;
+    width: 230px;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: capitalize;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+  
+.dropdown-item:hover {
+    background-color: #f3f3f3;
+}
+
+.dropdown-item:nth-child(1) {
+    border-bottom: 1px solid #e4e4e7;
+}
+
+.dropdown-item:last-child {
+    border-top: 1px solid #e4e4e7;
+}
+
+.dropdown-item svg {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+/* .profile_cover .icon {
     width: 40px;
     height: 40px;
     display: flex;
@@ -294,11 +422,6 @@
     background: transparent;
     border: 0;
     cursor: pointer;
-}
-
-.profile_cover .icon button svg {
-    color: var(--primary-color);
-    font-size: 22px;
 }
 
 .profile_cover .icon button img {
@@ -351,7 +474,7 @@
     font-size: 14px;
     font-family: var(--family);
     font-weight: 400;
-}
+} */
 
 /*************** Main Body *********************/  
 
@@ -367,6 +490,7 @@
 footer {
     padding: 15px;
     background: #fff;
+    border-top: 1px solid #e4e4e7;
 }
 
 footer p {

@@ -1,13 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 /* Zustand Store... */
 import useUserStore from '@/stores/useUserStore';
 
 /* icons...*/
 import { RxDashboard } from "react-icons/rx";
-import { TfiLayoutGrid2 } from "react-icons/tfi";
-import { MdOutlineLightMode } from "react-icons/md";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosLogOut } from 'react-icons/io'
+import { CgProfile } from "react-icons/cg";
+import { SlSupport } from "react-icons/sl";
 
 /* packages...*/
 import { Navigate, Outlet } from 'react-router-dom'
@@ -16,9 +18,8 @@ import { Navigate, Outlet } from 'react-router-dom'
 import '@styles/_dashboard.css'
 
 /* assets...*/
-// import AuthFormLogo from  '@assets/cva-logo.png'
-import UserProfilePic from  '@assets/11.png'
 import hand from '@assets/hand.gif'
+import usericon from '@assets/user.png'
 
 /* components...*/
 import BackToTopButton from '@components/BackToTopButton'
@@ -31,25 +32,12 @@ import { MenuItems } from '@helper/MenuItems'
 const DashboardLayout = () => {
   const { token, user, logout } = useUserStore();
 
-  const [isVisible, setIsVisible] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
 
   const currentYear = new Date().getFullYear()
-  const profileRef = useRef(null)
   const allowedMenus = getMenuByRole(user?.role_id)
 
-  const toggleVisibility = (event) => {
-    event.stopPropagation()
-    setIsVisible((prev) => !prev)
-  }
-
-  const handleClickOutside = (event) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
-      setIsVisible(false)
-    }
-  }
-
-  document.addEventListener('mousedown', handleClickOutside)
 
   if (!token) {
     return <Navigate to={'/auth/login'} replace />
@@ -57,6 +45,7 @@ const DashboardLayout = () => {
 
   const handleLogout = () => logout()
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev)
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <div className='site-wraper'>
@@ -82,6 +71,13 @@ const DashboardLayout = () => {
               ))}
           </ul>
         </div>
+        <div className='side_profile'>
+          <img src={usericon} alt="User" className="avatar" />
+          <div className="content">
+            <div className="name">muhammad bakhtawar niaz</div>
+            <div className="logout">logout</div>
+          </div>
+        </div>
       </aside>
 
       <main className={`site_main ${isSidebarCollapsed ? 'active' : ''}`}>
@@ -100,29 +96,23 @@ const DashboardLayout = () => {
 
           <div className="header-right">
             <div className='profile_cover'>
-              <div className="icon">
-                <button><MdOutlineLightMode /></button>
-              </div>
-              <div className="icon">
-                <button><TfiLayoutGrid2 /></button>
-              </div>
-              <div className="icon img_icon">
-                <button onMouseDown={toggleVisibility}>
-                  <img
-                    src={user?.profile_image || UserProfilePic}
-                    alt="profile"
-                    onError={(e) => {
-                      e.target.onerror = null
-                      e.target.src = UserProfilePic
-                    }}
-                  />
-                </button>
-                <div ref={profileRef} className={`profile ${isVisible ? 'visible' : ''}`}>
-                  <ul>
-                    <li onClick={handleLogout}><IoIosLogOut /><span>Log Out</span></li>
-                  </ul>
+              <div className="user-info" onClick={toggleDropdown}>
+                <img src={usericon} alt="User" className="avatar" />
+                <div className="user-text">
+                  <div className="name">Muhammad Bakhtawar Niaz</div>
+                  <div className="email">bakhtawarneaz@gmail.com</div>
                 </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevrons-up-down ml-auto h-4 w-4 shrink-0 opacity-50"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
               </div>
+              {isOpen && (
+                <div className="dropdown">
+                  <div className="dropdown-item"><SlSupport /> Support</div>
+                  <div className="dropdown-item"><IoSettingsOutline /> Settings</div>
+                  <div className="dropdown-item"><CgProfile /> Profile</div>
+                  <div className="dropdown-item"><RiLockPasswordLine /> Change Password</div>
+                  <div className="dropdown-item" onClick={handleLogout}><IoIosLogOut /> Log out</div>
+                </div>
+              )}
             </div>
           </div>
         </header>

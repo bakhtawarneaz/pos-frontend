@@ -1,10 +1,14 @@
 /* icons...*/
 import { FaHome } from 'react-icons/fa';
-import { FaBuilding } from "react-icons/fa";
+import { RiLuggageCartLine } from "react-icons/ri";
 import { TbBrandCodepen } from "react-icons/tb";
+import { AiOutlineCustomerService } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
-import { MdCampaign } from "react-icons/md";
-import { AiOutlinePartition } from "react-icons/ai";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { FaRegFileAlt } from "react-icons/fa";
+import { GoShareAndroid } from "react-icons/go";
+import { BsBank } from "react-icons/bs";
+import { FaRegChartBar } from "react-icons/fa";
 
 /* helpers...*/
 import { getDynamicPath } from '@helper/PathHelper';
@@ -18,7 +22,7 @@ export const MenuItems = [
     {
         title: 'Product',
         path: getDynamicPath('/product'),
-        icon: <FaBuilding />,
+        icon: <RiLuggageCartLine />,
     },
     {
         title: 'Brand',
@@ -28,31 +32,36 @@ export const MenuItems = [
     {
         title: 'Customer',
         path: getDynamicPath('/customer'),
-        icon: <FaUsers />,
+        icon: <AiOutlineCustomerService />,
     },
     {
         title: 'Employee',
         path: getDynamicPath('/employee'),
-        icon: <MdCampaign />,
+        icon: <FaUsers />,
     },
     {
         title: 'Invoice',
         path: getDynamicPath('/invoice'),
-        icon: <MdCampaign />,
+        icon: <LiaFileInvoiceDollarSolid />,
+    },
+    {
+        title: 'Report',
+        path: getDynamicPath('/report'),
+        icon: <FaRegChartBar />,
     },
     {
         title: 'Voucher',
         path: getDynamicPath('/voucher'),
-        icon: <MdCampaign />,
+        icon: <FaRegFileAlt />,
     },
     {
         title: 'Area',
         path: getDynamicPath('/area'),
-        icon: <AiOutlinePartition />,
+        icon: <GoShareAndroid />,
     },
     {
         title: 'Bank',
         path: getDynamicPath('/bank'),
-        icon: <AiOutlinePartition />,
+        icon: <BsBank />,
     },
   ];
