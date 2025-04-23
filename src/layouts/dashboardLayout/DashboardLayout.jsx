@@ -29,6 +29,10 @@ import { getMenuByRole } from '@helper/RoleHelper'
 import MenuList from '@helper/MenuList'
 import { MenuItems } from '@helper/MenuItems'
 
+/* assets...*/
+import Logo from  '@assets/logo.png';
+import Fav from  '@assets/fav.png';
+
 const DashboardLayout = () => {
   const { token, user, logout } = useUserStore();
 
@@ -53,8 +57,8 @@ const DashboardLayout = () => {
         <div className='sider'>
           <div className='sidebar_logo'>
             <div className="site_logo">
-              {/* <img src={AuthFormLogo} alt='' /> */}
-              <h1>POS</h1>
+              <img src={Logo} className='logo' alt='' />
+              <img src={Fav} className='fav' alt='' />
             </div>
             {!isSidebarCollapsed && (
               <div className="toggle_sidebar">

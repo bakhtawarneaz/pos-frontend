@@ -12,11 +12,11 @@ const slides = [
     {
         image: img1,
         title: 'Effortless Inventory Tracking,',
-        bullets: 'Never Run Out of Essential Items Again'
+        bullets: 'Real-time Stock Updates at Your Fingertips'
     },
     {
         image: img2,
-        title: 'Powerful Analytics,',
+        title: 'Smart Reordering',
         bullets: 'Never Run Out of Essential Items Again'
     },
     {
