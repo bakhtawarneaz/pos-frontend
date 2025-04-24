@@ -118,13 +118,13 @@
 }
 
 .side_profile {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 0 20px;
-    width: 100%;
+    width: inherit;
     z-index: 99;
 }
 

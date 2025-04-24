@@ -22,10 +22,7 @@
 
 .top_box .box {
     flex: 1;
-    box-shadow: 0 0 #0000, 
-  0 0 #0000, 
-  0 1px 3px 0 rgba(0, 0, 0, 0.1), 
-  0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
     padding: 15px;
     border-radius: 5px;
     position: relative;
@@ -78,5 +75,45 @@
     width: 95px;
     height: 95px;
     color: #e11d48;
-    opacity: .05;
+    opacity: 0.09;
+}
+
+.chart_wrap {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+}
+
+.chart_wrap .chart_box {
+    flex: 1;
+    padding: 15px;
+    border-radius: 5px;
+    width: 50%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.chart_wrap .chart_box .title {
+    background: linear-gradient(45deg, #f43f5e, #f7778c);
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #fff;
+    border-radius: 5px;
+    padding: 1px 10px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.chart_wrap .chart_box .disc {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(82, 82, 108, 0.8);
+    text-transform: capitalize;
+}
+
+.chart_box .product_chart {
+    display: flex;
+    justify-content: center;
 }
