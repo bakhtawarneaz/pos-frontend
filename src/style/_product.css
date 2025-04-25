@@ -314,6 +314,7 @@ form .error {
 .modal_btn_cover .cancel{
     border: 0;
     outline: none;
+    background: transparent;
 }
 
 .modal_btn_cover .cancel a{
