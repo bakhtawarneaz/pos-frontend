@@ -1,0 +1,326 @@
+.card {
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.card_header .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.card_header .top .left {
+    width: 50%;
+}
+
+.card_header .top .left h2 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.card_header .top .right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.card_header .top .right .btn_cover {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: var(--primary-color);
+    box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.4);
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.card_header .top .right .btn_reload {
+    padding: 10px 15px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.card_header .top .right .btn_cover svg {
+    color: #fff;
+    margin-right: 5px;
+}
+
+.card_header .top .right .btn_cover button {
+    background: transparent;
+    border: 0;
+}
+.card_header .top .right .btn_cover button a{
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #fff;
+    text-decoration: none;
+}
+
+.card_header .bottom {
+    margin-bottom: 15px;
+}
+
+.card_header .bottom .left {
+    width: 50%;
+    position: relative;
+}
+
+.card_header .bottom .left svg {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #cdcdcd;
+    font-size: 22px;
+}
+
+.card_header .bottom .left input[type="text"] {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 2px;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+    text-transform: capitalize;
+    outline: none;
+}
+
+.card_body {
+    border: 1px solid #e5e7eb;
+}
+
+.card_body table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.card_body table thead {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.card_body table thead th {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
+    padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+}
+
+.card_body table tbody td {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
+    padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+}
+
+.card_body table tbody td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.add_product {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.inner_form {
+    margin-top: 15px;
+}
+
+.custom_upload {
+    background: rgba(0, 0, 0, 0.02);
+    width: 120px;
+    height: 120px;
+    border: 1px dashed #d9d9d9;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+}
+
+.upload_cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.custom_upload input[type="file"] {
+    display: none;
+}
+
+.upload_btn {
+    border: 0;
+    background: transparent;
+}
+
+.upload_btn .icon {
+    display: block;
+    color: #5d596c;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 25px;
+}
+
+.upload_btn .txt {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.upload_loading {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 0;
+    padding: 10px;
+}
+
+.upload_reset {
+    width: 98px;
+    height: 98px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00000080;
+    border-radius: 8px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: 0.5s all;
+    opacity: 0;
+}
+
+.upload_reset button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.upload_reset button svg {
+    color: #fff;
+    font-family: var(--family);
+    font-size: 25px;
+}
+
+.upload_loading img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom_upload:hover .upload_reset {
+    transition: 0.5s all;
+    opacity: 1;
+}
+
+.middle_form_group {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.middle_form_group .form_group {
+    display: flex;
+    flex-direction: column;
+}
+
+.middle_form_group .form_group label {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.middle_form_group .form_group .form_control {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 12px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+form .error {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: capitalize;
+    color: red;
+}
+
+.modal_btn_cover {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.modal_btn_cover button {
+    background-color: var(--primary-color);
+    box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.4);
+    padding: 10px 20px;
+    border-radius: 2px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.modal_btn_cover .cancel{
+    border: 0;
+    outline: none;
+}
+
+.modal_btn_cover .cancel a{
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border: 1px solid #e5e7eb;
+    color: #000;
+    background: #fff;
+    text-decoration: none;
+}
+

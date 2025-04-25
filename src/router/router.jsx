@@ -22,6 +22,8 @@ import Invoice from '@authPages/invoice/Invoice';
 import Voucher from '@authPages/voucher/Voucher';
 import Report from '@authPages/report/Report';
 
+import ProductAdd from '@authPages/product/ProductAdd';
+
 /************* Not Found Links *************/
 import NotFound from '@components/NotFound';
 
@@ -62,7 +64,14 @@ const router = createBrowserRouter([
             { path: 'bank', element: <ProtectedRoute element={<Bank />} allowedRoles={[1]} /> }, 
             { path: 'brand', element: <ProtectedRoute element={<Brand />} allowedRoles={[1]} /> }, 
             { path: 'employee', element: <ProtectedRoute element={<Employee />} allowedRoles={[1]} /> },
-            { path: 'product', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },
+            {
+                path: 'product',
+                children: [
+                  { path: '', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },
+                  { path: 'product-add', element: <ProtectedRoute element={<ProductAdd />} allowedRoles={[1]} /> },
+                ],
+            },
+            // { path: 'product', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },
             { path: 'customer', element: <ProtectedRoute element={<Customer />} allowedRoles={[1]} /> },
             { path: 'invoice', element: <ProtectedRoute element={<Invoice />} allowedRoles={[1, 2]} /> },
             { path: 'voucher', element: <ProtectedRoute element={<Voucher />} allowedRoles={[1, 2]} /> },

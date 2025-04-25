@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { createProduct } from '@api/productApi';
 import { login } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -15,4 +16,17 @@ export function useLogin(navigate, setLoading) {
             setLoading(false);
         },
     });
+}
+
+/** Product **/
+
+export function useCreateProduct() {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: createProduct,
+      onSuccess: () => {
+        toast.success('Product created successfully!');
+        queryClient.invalidateQueries({ queryKey: ['product'] });
+      },
+   });
 }

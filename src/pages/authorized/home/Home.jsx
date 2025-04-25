@@ -10,8 +10,29 @@ import '@styles/_home.css'
 import Products from '@view/Products'
 import SalesAndPurchases from '@view/SalesAndPurchases'
 
+/* components...*/
+import TableComponent from '@components/TableComponent';
+
 
 const Home = () => {
+
+{/*  Stock Alert Columns */}
+
+const productColumns = [
+    { key: "id", label: "ID" },
+    { key: "company", label: "Code" },
+    { key: "number", label: "Name" },
+    { key: "email", label: "Alert Quantity" },
+];
+
+{/*  Invoices Columns */}
+
+const invoiceColumns = [
+    { key: "id", label: "ID" },
+    { key: "company", label: "Invoice Type" },
+    { key: "number", label: "Amount" },
+];
+
   return (
     <div className='home_wrap'>
         <div className='heading'>
@@ -28,21 +49,21 @@ const Home = () => {
             </div>
             <div className='box'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag h-4 w-4 small"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <h3>total orders</h3>
+                <h3>total purchases</h3>
                 <p>120,784.02</p>
                 <span>view details<Arrow /></span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag h-4 w-4 big"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
             </div>
             <div className='box'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-box h-4 w-4 small"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
-                <h3>total products</h3>
+                <h3>total sales returns</h3>
                 <p>120,784.02</p>
                 <span>view details<Arrow /></span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-box h-4 w-4 big"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
             </div>
             <div className='box'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users h-4 w-4 small"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <h3>total customers</h3>
+                <h3>total purchase returns</h3>
                 <p>120,784.02</p>
                 <span>view details<Arrow /></span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users h-4 w-4 big"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -58,6 +79,29 @@ const Home = () => {
                 <p className="title">sales & purchases</p>
                 <p className="disc">this month sales & purchases</p> 
                 <SalesAndPurchases /> 
+            </div>
+        </div>
+        {/* Table */}
+        <div className='dashboard_table_wrap'>
+            <div className='dashboard_table_body'>
+                <p className="title">stock alert</p>
+                <TableComponent 
+                    columns={productColumns}
+                    data={[]}
+                    showAction={false}
+                    showSummary={true}
+                    showPagination={false}
+                />
+            </div>
+            <div className='dashboard_table_body'>
+                <p className="title">recent invoices</p>
+                <TableComponent 
+                    columns={invoiceColumns}
+                    data={[]}
+                    showAction={false}
+                    showSummary={true}
+                    showPagination={false}
+                />
             </div>
         </div>
     </div>
