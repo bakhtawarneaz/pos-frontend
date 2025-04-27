@@ -49,6 +49,15 @@
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
+.card_header .top .right .rotate {
+    animation: spin 0.7s linear infinite;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .card_header .top .right .btn_cover svg {
     color: #fff;
     margin-right: 5px;
@@ -149,13 +158,12 @@
     padding: 8px 8px;
     border-radius: 1px;
     cursor: pointer;
-    border: 1px solid #e5e7eb85;
+    border: 0;
     display: flex;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .table_action svg {
-    color: var(--primary-color);
+    color: #000;
     font-size: 16px;
 }
 
@@ -414,3 +422,24 @@ form .error {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.skeleton-loader {
+    height: 50px;
+    width: 100%;
+    background-color: #e2e2e2;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

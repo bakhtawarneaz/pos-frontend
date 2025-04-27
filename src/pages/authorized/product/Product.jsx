@@ -21,6 +21,9 @@ import usericon from '@assets/user.png'
 
 /* packages...*/
 import { Link, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+
+
 
 const Product = () => {
 
@@ -28,12 +31,15 @@ const Product = () => {
   const [page, setPage] = useState(1);
   const perPage = 5;
   const [searchTerm, setSearchTerm] = useState("");
+  const [isReloading, setIsReloading] = useState(false);
+
+  const queryClient = useQueryClient();
 
   /* Hooks...*/
   const navigate = useNavigate();
 
   /* Queries */
-  const { data: productData } = useFetchProduct({ page, perPage });
+  const { data: productData, isLoading: isProductLoading } = useFetchProduct({ page, perPage });
   const product = productData?.data?.data || [];
   const meta = productData?.data?.meta || {};
 
@@ -56,13 +62,23 @@ const Product = () => {
     setPage(newPage);
   };
 
-    /* Filter...*/
-    const filteredData = useMemo(() => {
+  /* Filter...*/
+  const filteredData = useMemo(() => {
       if (!searchTerm) return product;
       return product.filter((item) =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }, [searchTerm, product]);
+  }, [searchTerm, product]);
+
+  const handleReload = async () => {
+    try {
+      setIsReloading(true); 
+      await queryClient.invalidateQueries({ queryKey: ['product'] });
+    } finally {
+      setTimeout(() => setIsReloading(false), 500); 
+    }
+  };
+
 
   const columns = [
       { key: "id", label: "ID" },
@@ -107,8 +123,8 @@ const Product = () => {
               <h2>products <span>({meta.total || 0})</span></h2>
             </div>
             <div className='right'> 
-              <div className='btn_reload'>
-                <LuRefreshCw />
+              <div className='btn_reload' onClick={handleReload}>
+                <LuRefreshCw className={`${isReloading ? 'rotate' : ''}`} />
               </div>
               <div className='btn_cover'>
                 <FiPlus />
@@ -139,6 +155,7 @@ const Product = () => {
               totalRecords={meta.total || 0}
               onPageChange={handlePageChange}
               onEdit={handleEdit}
+              isLoading={isProductLoading}
             />
         </div>
       </div>

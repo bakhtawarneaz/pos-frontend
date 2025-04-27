@@ -15,21 +15,38 @@ const TableComponent = ({
   onEdit = () => {},
   showAction = true,
   showSummary = true,
-  showPagination = true
+  showPagination = true,
+  isLoading = false,
 }) => {
   return (
     <>
       <table>
         <thead>
           <tr>
-            {Array.isArray(columns) && columns.map((col, index) => (
-                <th key={index}>{col.label}</th>
+            {columns.map((col, index) => (
+              <th key={index}>{col.label}</th>
             ))}
             {showAction && <th>Action</th>}
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 ? (
+          {/* Loading skeletons */}
+          {isLoading ? (
+            [...Array(perPage)].map((_, index) => (
+              <tr key={index}>
+                {columns.map((_, colIndex) => (
+                  <td key={colIndex}>
+                    <div className="skeleton-loader"></div>
+                  </td>
+                ))}
+                {showAction && (
+                  <td>
+                    <div className="skeleton-loader"></div>
+                  </td>
+                )}
+              </tr>
+            ))
+          ) : data.length === 0 ? (
             <tr>
               <td colSpan={columns.length + (showAction ? 1 : 0)}>
                 <TableBlank />
@@ -45,8 +62,8 @@ const TableComponent = ({
                 ))}
                 {showAction && (
                   <td>
-                    <button onClick={() => onEdit(row)} className='table_action'>
-                        <FaRegEdit />
+                    <button onClick={() => onEdit(row)} className="table_action">
+                      <FaRegEdit />
                     </button>
                   </td>
                 )}
@@ -55,20 +72,27 @@ const TableComponent = ({
           )}
         </tbody>
       </table>
-        {totalPages > 0 && (
-            <div className="pagination_wrap">
-                {showSummary && <TableSummary currentPage={currentPage} perPage={perPage}  totalRecords={totalRecords} />}
-                {showPagination && (
-                    <PaginationComponent
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={onPageChange}
-                    />
-                )}
-            </div>
-        )}
+
+      {totalPages > 0 && !isLoading && (
+        <div className="pagination_wrap">
+          {showSummary && (
+            <TableSummary
+              currentPage={currentPage}
+              perPage={perPage}
+              totalRecords={totalRecords}
+            />
+          )}
+          {showPagination && (
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+          )}
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
 export default TableComponent
