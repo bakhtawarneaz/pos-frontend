@@ -66,6 +66,12 @@
 .card_header .top .right .btn_cover button {
     background: transparent;
     border: 0;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #fff;
+    cursor: pointer;
 }
 .card_header .top .right .btn_cover button a{
     font-family: var(--family);
@@ -443,3 +449,94 @@ form .error {
     }
   }
   
+
+  /************** Modal ************/
+
+  .modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.modal_content {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.modal_header {
+    position: relative;
+}
+
+.modal_header button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--primary-color);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_header button svg {
+    color: #fff;
+}
+
+.modal_body h2 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.modal_body {
+    padding: 20px;
+}
+
+.modal_body form {
+    margin-top: 15px;
+}
+
+.modal_body form .form_group {
+    margin-bottom: 15px;
+}
+
+.modal_body .form_group label {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.modal_body .form_group .form_control {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 12px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+

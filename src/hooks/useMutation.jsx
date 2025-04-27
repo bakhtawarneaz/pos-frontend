@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createProduct, updateProduct, deleteProduct } from '@api/productApi';
+import { createArea, updateArea } from '@api/areaApi';
 import { login } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -70,3 +71,38 @@ export const useUpdateProduct = (navigate, reset, handleResetUpload) => {
       },
     });
   };
+
+
+  /** Area **/
+
+export function useCreateArea(closeModal) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createArea,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Area created!');
+      closeModal();
+      queryClient.invalidateQueries({ queryKey: ['area'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create Area.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+export const useUpdateArea = (closeModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateArea, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['area']); 
+      toast.success(data?.message || 'Area updated!');
+      closeModal(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update area.';
+      toast.error(errorMessage);
+    },
+  });
+};
