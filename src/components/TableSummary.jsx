@@ -1,14 +1,13 @@
 import React from 'react';
 
-const TableSummary = ({ currentPage, totalPages }) => {
-  if (totalPages === 0) return null;
+const TableSummary = ({ currentPage, perPage, totalRecords }) => {
+  if (totalRecords === 0) return null;
 
-  const start = (currentPage - 1) * 10 + 1;
-  const end = Math.min(currentPage * 10, totalPages * 10);
-  const total = totalPages * 10;
+  const start = (currentPage - 1) * perPage + 1;
+  const end = Math.min(currentPage * perPage, totalRecords);
 
   return (
-    <p>Showing {start} to {end} of {total} entries</p>
+    <p>Showing {start} to {end} of {totalRecords} entries</p>
   );
 };
 

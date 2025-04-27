@@ -2,11 +2,14 @@ import React from 'react'
 import TableBlank from './TableBlank';
 import PaginationComponent from './PaginationComponent';
 import TableSummary from './TableSummary';
+import { FaRegEdit } from "react-icons/fa";
 
 const TableComponent = ({
   columns = [],
   data = [],
   currentPage = 1,
+  perPage = 10,
+  totalRecords = 0,
   totalPages = 0,
   onPageChange = () => {},
   onEdit = () => {},
@@ -42,8 +45,8 @@ const TableComponent = ({
                 ))}
                 {showAction && (
                   <td>
-                    <button onClick={() => onEdit(row)}>
-                      {/* <Pencil size={16} /> */}
+                    <button onClick={() => onEdit(row)} className='table_action'>
+                        <FaRegEdit />
                     </button>
                   </td>
                 )}
@@ -54,12 +57,12 @@ const TableComponent = ({
       </table>
         {totalPages > 0 && (
             <div className="pagination_wrap">
-                {showSummary && <TableSummary currentPage={currentPage} totalPages={totalPages} />}
+                {showSummary && <TableSummary currentPage={currentPage} perPage={perPage}  totalRecords={totalRecords} />}
                 {showPagination && (
                     <PaginationComponent
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={onPageChange}
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={onPageChange}
                     />
                 )}
             </div>

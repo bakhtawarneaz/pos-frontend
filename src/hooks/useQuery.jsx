@@ -3,10 +3,10 @@ import { getProduct } from '@api/productApi';
 
 
 /** Organization **/
-export function useFetchProduct() {
+export function useFetchProduct({ page, perPage }) {
     return useQuery({
-        queryKey: ['product'],
-        queryFn: () => getProduct(),
+        queryKey: ['product', page, perPage],
+        queryFn: () => getProduct({ page, perPage }),
         staleTime: 60 * 60 * 1000,
     });
 }

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createProduct } from '@api/productApi';
+import { createProduct, updateProduct, deleteProduct } from '@api/productApi';
 import { login } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -20,13 +20,53 @@ export function useLogin(navigate, setLoading) {
 
 /** Product **/
 
-export function useCreateProduct() {
+export function useCreateProduct(navigate, reset, handleResetUpload) {
     const queryClient = useQueryClient();
     return useMutation({
       mutationFn: createProduct,
-      onSuccess: () => {
-        toast.success('Product created successfully!');
+      onSuccess: (data) => {
+        toast.success(data?.message || 'Product created!');
+        reset();
+        handleResetUpload();
+        navigate('/dashboard/product'); 
         queryClient.invalidateQueries({ queryKey: ['product'] });
+      },
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.message || 'Failed to create product.';
+        toast.error(errorMessage);
       },
    });
 }
+
+export const useUpdateProduct = (navigate, reset, handleResetUpload) => {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: updateProduct, 
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(['product']); 
+        toast.success(data?.message || 'Product updated!');
+        reset(); 
+        handleResetUpload(); 
+        navigate('/dashboard/product');
+      },
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.message || 'Failed to update product.';
+        toast.error(errorMessage);
+      },
+    });
+  };
+
+  export const useDeleteProduct = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: deleteProduct,
+      onSuccess: (data) => {
+        queryClient.invalidateQueries(['product']);
+        toast.success(data?.message || 'Product status updated successfully!');
+      },
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.message || 'Failed to update product status.';
+        toast.error(errorMessage);
+      },
+    });
+  };

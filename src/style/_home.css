@@ -197,6 +197,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 15px 10px;
 }
 
 .pagination_wrap p {

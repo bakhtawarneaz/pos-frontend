@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 /* packages...*/
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 /* hooks... */
-import { useCreateProduct } from '@hooks/useMutation';
+import { useCreateProduct, useUpdateProduct } from '@hooks/useMutation';
 
 /* api...*/
 import { uploadFile } from '@api/uploadApi';
@@ -14,26 +14,56 @@ import { uploadFile } from '@api/uploadApi';
 /* icons...*/
 import { FaRegTrashAlt } from "react-icons/fa";
 
+/* components...*/
+import ButtonLoader from '@components/ButtonLoader';
+
 const ProductAdd = () => {
 
-    const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset, control } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset } = useForm();
+
+    /* Hooks...*/
+    const location = useLocation();
+    const navigate = useNavigate();
+    const fileInputRef = useRef(null); 
+
 
    /* UseState Here...*/
    const [isUploading, setIsUploading] = useState(false); 
    const [uploadedImage, setUploadedImage] = useState(''); 
    const [progress, setProgress] = useState(0);
+   const { product, isEdit } = location.state || {};
 
   /* Mutations */
-  const createMutation = useCreateProduct();
+  const createMutation = useCreateProduct(navigate, reset, handleResetUpload);
+  const updateMutation = useUpdateProduct(navigate, reset, handleResetUpload);
 
-  const fileInputRef = useRef(null); 
+
+  /* Effects */
+  useEffect(() => {
+    if (isEdit && product) {
+      setValue('code', product.code);
+      setValue('name', product.name);
+      setValue('carton_packing', product.carton_packing);
+      setValue('purchase_rate', product.purchase_rate);
+      setValue('sale_rate', product.sale_rate);
+      setValue('qty', product.qty);
+      setValue('product_img', product.product_img);
+      setUploadedImage(product.product_img);
+    }
+  }, [isEdit, product, setValue]);
+
 
   /* Functions Here...*/
   const onSubmit = (data) => {
      const PAY_LOAD = {
         ...data,
+        id: isEdit ? product.id : null,
      };
-     createMutation.mutate(PAY_LOAD); 
+     if (isEdit) {
+        updateMutation.mutate(PAY_LOAD);
+      } else {
+        createMutation.mutate(PAY_LOAD);
+      }
   };
 
   function handleResetUpload() {
@@ -163,8 +193,12 @@ const ProductAdd = () => {
 
         <div className='modal_btn_cover'>
           <button type="button" className='cancel'><Link to="/dashboard/product">cancel</Link></button>
-          <button type="submit" className='btn' disabled={createMutation.isPending}>
-            {createMutation.isPending ? ( <ButtonLoader /> ) : ('Create')}
+          <button type="submit" className='btn' disabled={isEdit ? updateMutation.isPending : createMutation.isPending}>
+            {(isEdit ? updateMutation.isPending : createMutation.isPending) ? (
+              <ButtonLoader />
+            ) : (
+              isEdit ? 'Update' : 'Create'
+            )}
           </button>
         </div>
       </form>

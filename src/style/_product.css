@@ -1,7 +1,5 @@
 .card {
-    border: 1px solid #e5e7eb;
-    padding: 20px;
-    border-radius: 15px;
+    overflow-x: auto;
 }
 
 .card_header .top {
@@ -92,7 +90,6 @@
     border-radius: 2px;
     border: 1px solid #e5e7eb;
     display: flex;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
     font-family: var(--family);
     font-weight: 400;
     font-size: 14px;
@@ -128,18 +125,87 @@
 .card_body table tbody td {
     font-family: var(--family);
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: capitalize;
     color: #000;
-    padding: 10px 10px;
+    padding: 5px 5px;
     text-align: left;
     min-width: 100px;
 }
 
 .card_body table tbody td img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50px;
+}
+
+.card_body table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table_action {
+    background: transparent;
+    outline: none;
+    padding: 8px 8px;
+    border-radius: 1px;
+    cursor: pointer;
+    border: 1px solid #e5e7eb85;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.table_action svg {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.pagination_wrap .pages {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.pagination_wrap .pagination-arrow {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border: 0;
+    cursor: pointer;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.pagination_wrap button {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+}
+
+.pagination_wrap button svg {
+    color: #fff;
+}
+
+.pagination_wrap button[disabled] {
+    background: var(--primary-color);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination_wrap button.active {
+    background: var(--primary-color);
+    color: #fff;
+    border: 1px solid var(--primary-color);
 }
 
 .add_product {
@@ -208,6 +274,29 @@
     border-radius: 8px;
     border: 0;
     padding: 10px;
+}
+
+.upload_loading .loading_title {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #000;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.upload_loading .loading_bar {
+    width: 100%;
+    height: 1px;
+    position: relative;
+    background: #ebebeb;
+}
+  
+.upload_loading .loading_bar .progress {
+    height: 100%;
+    display: block;
+    background: var(--primary-color);
 }
 
 .upload_reset {
@@ -312,8 +401,6 @@ form .error {
 }
 
 .modal_btn_cover .cancel{
-    border: 0;
-    outline: none;
     background: transparent;
 }
 
@@ -323,3 +410,7 @@ form .error {
     text-decoration: none;
 }
 
+.modal_btn_cover button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

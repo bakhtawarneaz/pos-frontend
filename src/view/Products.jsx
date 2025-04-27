@@ -11,7 +11,7 @@ const Products = () => {
       {
         label: 'Product Share',
         data: [400, 300, 300, 200],
-        backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50'],
+        backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50'], 
         borderWidth: 1,
       },
     ],
