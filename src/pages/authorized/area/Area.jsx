@@ -72,9 +72,9 @@ const Area = () => {
     setDeleteModalOpen(false);
   };
 
-const handleDelete = () => {
-  deleteMutation.mutate(deletingArea.id);
-};
+  const handleDelete = () => {
+    deleteMutation.mutate(deletingArea.id);
+  };
 
  function openAddModal() {
   setIsModalOpen(true);

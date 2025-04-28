@@ -23,6 +23,7 @@ import Voucher from '@authPages/voucher/Voucher';
 import Report from '@authPages/report/Report';
 
 import ProductAdd from '@authPages/product/ProductAdd';
+import BankAdd from '@authPages/bank/BankAdd';
 
 /************* Not Found Links *************/
 import NotFound from '@components/NotFound';
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
             { path: '', element: <Navigate to="home" /> },
             { path: 'home', element: <ProtectedRoute element={<Home />} allowedRoles={[1, 2]} /> }, 
             { path: 'area', element: <ProtectedRoute element={<Area />} allowedRoles={[1]} /> }, 
-            { path: 'bank', element: <ProtectedRoute element={<Bank />} allowedRoles={[1]} /> }, 
+            // { path: 'bank', element: <ProtectedRoute element={<Bank />} allowedRoles={[1]} /> }, 
             { path: 'brand', element: <ProtectedRoute element={<Brand />} allowedRoles={[1]} /> }, 
             { path: 'employee', element: <ProtectedRoute element={<Employee />} allowedRoles={[1]} /> },
             {
@@ -69,6 +70,13 @@ const router = createBrowserRouter([
                 children: [
                   { path: '', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },
                   { path: 'product-add', element: <ProtectedRoute element={<ProductAdd />} allowedRoles={[1]} /> },
+                ],
+            },
+            {
+                path: 'bank',
+                children: [
+                  { path: '', element: <ProtectedRoute element={<Bank />} allowedRoles={[1]} /> },
+                  { path: 'bank-add', element: <ProtectedRoute element={<BankAdd />} allowedRoles={[1]} /> },
                 ],
             },
             // { path: 'product', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },

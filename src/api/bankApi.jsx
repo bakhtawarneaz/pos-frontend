@@ -17,6 +17,6 @@ export const updateBank = async (bankData) => {
 };
 
 export const deleteBank = async (id) => {
-    const response = await api.delete('/banks/delete',id);
+    const response = await api.delete(`/banks/delete/${id}`);
     return response.data;
 };

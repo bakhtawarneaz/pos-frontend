@@ -151,15 +151,15 @@ export function useCreateBank(navigate, reset) {
 }
 
 
-export const useUpdateBank = (reset, closeModal) => {
+export const useUpdateBank = (navigate, reset) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBank, 
     onSuccess: (data) => {
       queryClient.invalidateQueries(['bank']); 
       toast.success(data?.message || 'Bank updated!');
-      closeModal();
       reset(); 
+      navigate('/dashboard/bank'); 
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to update bank.';
@@ -207,14 +207,14 @@ export function useCreateBrand(navigate, reset, handleResetUpload) {
 }
 
 
-export const useUpdateBrand = (reset, closeModal, handleResetUpload) => {
+export const useUpdateBrand = (reset, navigate, handleResetUpload) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBrand, 
     onSuccess: (data) => {
       queryClient.invalidateQueries(['brand']); 
       toast.success(data?.message || 'Brand updated!');
-      closeModal();
+      navigate('/dashboard/brand'); 
       reset(); 
       handleResetUpload();
     },
@@ -263,14 +263,14 @@ export function useCreateCustomer(navigate, reset) {
 }
 
 
-export const useUpdateCustomer = (reset, closeModal) => {
+export const useUpdateCustomer = (reset, navigate) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateCustomer, 
     onSuccess: (data) => {
       queryClient.invalidateQueries(['customer']); 
       toast.success(data?.message || 'Customer updated!');
-      closeModal();
+      navigate('/dashboard/customer'); 
       reset(); 
     },
     onError: (error) => {
@@ -317,14 +317,14 @@ export function useCreateEmployee(navigate, reset) {
 }
 
 
-export const useUpdateEmployee = (reset, closeModal) => {
+export const useUpdateEmployee = (reset, navigate) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateEmployee, 
     onSuccess: (data) => {
       queryClient.invalidateQueries(['employee']); 
       toast.success(data?.message || 'Employee updated!');
-      closeModal();
+      navigate('/dashboard/employee');
       reset(); 
     },
     onError: (error) => {
