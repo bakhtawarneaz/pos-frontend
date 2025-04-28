@@ -9,13 +9,13 @@ import ButtonLoader from '@components/ButtonLoader';
 import { FiPlus } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
+import { FiAlertTriangle } from "react-icons/fi";
 
 /* hooks... */
 import { useFetchArea } from '@hooks/useQuery';
-import { useCreateArea, useUpdateArea } from '@hooks/useMutation'; 
+import { useCreateArea, useUpdateArea, useDeleteArea } from '@hooks/useMutation'; 
 
 /* packages...*/
-import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
@@ -31,13 +31,16 @@ const Area = () => {
   const [isReloading, setIsReloading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArea, setEditingArea] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deletingArea, setDeletingArea] = useState(null);
 
   const queryClient = useQueryClient();
 
 
   /* Mutations */
-  const createMutation = useCreateArea(queryClient, closeModal);
-  const updateMutation = useUpdateArea(queryClient, closeModal);
+  const createMutation = useCreateArea(reset, closeModal);
+  const updateMutation = useUpdateArea(reset, closeModal);
+  const deleteMutation = useDeleteArea(closeDeleteModal);
 
   /* Queries */
   const { data: areaData, isLoading: isAreaLoading } = useFetchArea({ page, perPage });
@@ -48,16 +51,30 @@ const Area = () => {
   
   /* Functions Here...*/
   const onSubmit = (data) => {
-    const PAY_LOAD = {
-       ...data,
-       id: isEdit ? editingArea.id : null,
-    };
-    if (isEdit) {
-       updateMutation.mutate(PAY_LOAD);
-     } else {
-       createMutation.mutate(PAY_LOAD);
-     }
+    if (isEdit && editingArea) {
+      const PAY_LOAD = {
+        ...data,
+        id: editingArea.id,
+      };
+      updateMutation.mutate(PAY_LOAD);
+    } else {
+      createMutation.mutate(data);
+    }
  };
+
+ const openDeleteModal = (area) => {
+    setDeletingArea(area);
+    setDeleteModalOpen(true);
+  };
+
+  function closeDeleteModal() {
+    setDeletingArea(null);
+    setDeleteModalOpen(false);
+  };
+
+const handleDelete = () => {
+  deleteMutation.mutate(deletingArea.id);
+};
 
  function openAddModal() {
   setIsModalOpen(true);
@@ -67,7 +84,7 @@ const Area = () => {
 function openEditModal(area) {
   setEditingArea(area);
   setIsModalOpen(true);
-  reset({ area_name: area.area_name });
+  setValue('area_name', area.area_name);
 }
 
  function closeModal() {
@@ -105,6 +122,7 @@ const handleReload = async () => {
 
   return (
     <>
+      {/* Table */}
       <div className='card'>
         <div className='card_header'>
           <div className='top'>
@@ -117,7 +135,7 @@ const handleReload = async () => {
               </div>
               <div className='btn_cover' onClick={openAddModal}>
                 <FiPlus />
-                <button>add area</button>
+                add area
               </div>
             </div>
           </div>
@@ -144,7 +162,9 @@ const handleReload = async () => {
               totalRecords={meta.total || 0}
               onPageChange={handlePageChange}
               onEdit={openEditModal}
+              onDelete={openDeleteModal}
               isLoading={isAreaLoading}
+              showDeleteAction={true}
             />
         </div>
       </div>
@@ -160,7 +180,7 @@ const handleReload = async () => {
             {errors.area_name && <p className='error'>area name is required</p>}
           </div>
 
-          <div className='modal_btn_cover'>
+          <div className='form_btn_cover'>
             <button type="button" className='cancel' onClick={closeModal}>cancel</button>
             <button type="submit" className='btn' disabled={createMutation.isPending || updateMutation.isPending}>
               {(createMutation.isPending || updateMutation.isPending) ? (
@@ -172,6 +192,17 @@ const handleReload = async () => {
           </div>
 
       </form>
+    </ModalComponent>
+    <ModalComponent isOpen={deleteModalOpen} onClose={closeDeleteModal}>
+      <h2><FiAlertTriangle /> Delete Area</h2>
+      <p>Are you sure you want to delete <strong>{deletingArea?.area_name}</strong>?</p>
+      
+      <div className='form_btn_cover'>
+        <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
+        <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMutation.isPending}>
+          {deleteMutation.isPending ? <ButtonLoader /> : "Delete"}
+        </button>
+      </div>
     </ModalComponent>
     </>
   )

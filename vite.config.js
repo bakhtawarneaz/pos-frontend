@@ -12,7 +12,7 @@ export default defineConfig({
       '@authPages': path.resolve(__dirname, 'src/pages/authorized'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@view': path.resolve(__dirname, 'src/view'),
-      '@styles': path.resolve(__dirname, 'src/style'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@api': path.resolve(__dirname, 'src/api'),
       '@layouts': path.resolve(__dirname, 'src/layouts'),

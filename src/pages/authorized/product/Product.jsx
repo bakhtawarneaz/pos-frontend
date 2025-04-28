@@ -20,7 +20,7 @@ import { useDeleteProduct } from '@hooks/useMutation';
 import usericon from '@assets/user.png'
 
 /* packages...*/
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
 
@@ -79,6 +79,9 @@ const Product = () => {
     }
   };
 
+  const handleRedirect = (row) => {
+    navigate('/dashboard/product/product-add');
+  };
 
   const columns = [
       { key: "id", label: "ID" },
@@ -126,9 +129,9 @@ const Product = () => {
               <div className='btn_reload' onClick={handleReload}>
                 <LuRefreshCw className={`${isReloading ? 'rotate' : ''}`} />
               </div>
-              <div className='btn_cover'>
+              <div className='btn_cover' onClick={handleRedirect}>
                 <FiPlus />
-                <button><Link to="/dashboard/product/product-add">add product</Link></button>
+                add product
               </div>
             </div>
           </div>
@@ -156,6 +159,7 @@ const Product = () => {
               onPageChange={handlePageChange}
               onEdit={handleEdit}
               isLoading={isProductLoading}
+              showDeleteAction={false}
             />
         </div>
       </div>

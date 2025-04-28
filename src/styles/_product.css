@@ -1,3 +1,5 @@
+/*************** Table  *********************/ 
+
 .card {
     overflow-x: auto;
 }
@@ -38,6 +40,11 @@
     padding: 10px 20px;
     border-radius: 2px;
     cursor: pointer;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #fff;
 }
 
 .card_header .top .right .btn_reload {
@@ -61,25 +68,6 @@
 .card_header .top .right .btn_cover svg {
     color: #fff;
     margin-right: 5px;
-}
-
-.card_header .top .right .btn_cover button {
-    background: transparent;
-    border: 0;
-    font-family: var(--family);
-    font-weight: 400;
-    font-size: 14px;
-    text-transform: capitalize;
-    color: #fff;
-    cursor: pointer;
-}
-.card_header .top .right .btn_cover button a{
-    font-family: var(--family);
-    font-weight: 400;
-    font-size: 14px;
-    text-transform: capitalize;
-    color: #fff;
-    text-decoration: none;
 }
 
 .card_header .bottom {
@@ -140,10 +128,10 @@
 .card_body table tbody td {
     font-family: var(--family);
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     text-transform: capitalize;
     color: #000;
-    padding: 5px 5px;
+    padding: 10px 10px;
     text-align: left;
     min-width: 100px;
 }
@@ -158,19 +146,46 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
+.action_wrap {
+    display: flex;
+    gap: 10px;
+}
+
 .table_action {
     background: transparent;
     outline: none;
     padding: 8px 8px;
     border-radius: 1px;
     cursor: pointer;
-    border: 0;
+    border: 1px solid #e4e4e7;
     display: flex;
 }
 
 .table_action svg {
     color: #000;
     font-size: 16px;
+}
+
+.action_wrap .table_action.delete svg {
+    color: var(--primary-color);
+}
+
+
+/*************** Pagination *********************/ 
+
+.pagination_wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 10px;
+}
+
+.pagination_wrap p {
+    font-family: var(--family);
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
 }
 
 .pagination_wrap .pages {
@@ -222,13 +237,15 @@
     border: 1px solid var(--primary-color);
 }
 
-.add_product {
+.main_title {
     font-family: var(--family);
     font-weight: 500;
     font-size: 25px;
     text-transform: capitalize;
     color: #000;
 }
+
+/*************** Form *********************/ 
 
 .inner_form {
     margin-top: 15px;
@@ -392,14 +409,14 @@ form .error {
     color: red;
 }
 
-.modal_btn_cover {
+.form_btn_cover {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
 }
 
-.modal_btn_cover button {
+.form_btn_cover button {
     background-color: var(--primary-color);
     box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.4);
     padding: 10px 20px;
@@ -414,20 +431,18 @@ form .error {
     text-transform: capitalize;
 }
 
-.modal_btn_cover .cancel{
+.form_btn_cover .cancel{
     background: transparent;
-}
-
-.modal_btn_cover .cancel a{
     color: #000;
-    background: #fff;
-    text-decoration: none;
 }
 
-.modal_btn_cover button[disabled] {
+.form_btn_cover button[disabled] {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+
+/*************** Skeleton *********************/ 
 
 .skeleton-loader {
     height: 50px;
@@ -504,10 +519,30 @@ form .error {
     font-size: 25px;
     text-transform: capitalize;
     color: #000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .modal_body {
     padding: 20px;
+}
+
+.modal_body h2 svg {
+    color: var(--primary-color);
+}
+
+.modal_body p {
+    margin-bottom: 20px;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(82, 82, 108, 0.8);
+}
+
+.modal_body p strong {
+    color: #000;
 }
 
 .modal_body form {

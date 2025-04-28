@@ -3,6 +3,7 @@ import TableBlank from './TableBlank';
 import PaginationComponent from './PaginationComponent';
 import TableSummary from './TableSummary';
 import { FaRegEdit } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const TableComponent = ({
   columns = [],
@@ -13,10 +14,12 @@ const TableComponent = ({
   totalPages = 0,
   onPageChange = () => {},
   onEdit = () => {},
+  onDelete = () => {},
   showAction = true,
   showSummary = true,
   showPagination = true,
   isLoading = false,
+  showDeleteAction = false,
 }) => {
   return (
     <>
@@ -61,10 +64,15 @@ const TableComponent = ({
                   </td>
                 ))}
                 {showAction && (
-                  <td>
+                  <td className='action_wrap'>
                     <button onClick={() => onEdit(row)} className="table_action">
                       <FaRegEdit />
                     </button>
+                    {showDeleteAction && ( 
+                      <button onClick={() => onDelete(row)} className="table_action delete">
+                        <FaRegTrashAlt />
+                      </button>
+                    )}
                   </td>
                 )}
               </tr>

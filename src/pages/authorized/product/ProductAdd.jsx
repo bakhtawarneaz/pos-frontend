@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 /* packages...*/
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /* hooks... */
 import { useCreateProduct, useUpdateProduct } from '@hooks/useMutation';
@@ -55,14 +55,14 @@ const ProductAdd = () => {
 
   /* Functions Here...*/
   const onSubmit = (data) => {
-     const PAY_LOAD = {
-        ...data,
-        id: isEdit ? product.id : null,
-     };
-     if (isEdit) {
+     if (isEdit  && product) {
+          const PAY_LOAD = {
+            ...data,
+            id: product.id,
+        };
         updateMutation.mutate(PAY_LOAD);
       } else {
-        createMutation.mutate(PAY_LOAD);
+        createMutation.mutate(data);
       }
   };
 
@@ -116,9 +116,13 @@ const ProductAdd = () => {
     }
   };
 
+  const handleRedirect = (row) => {
+    navigate('/dashboard/product');
+  };
+
   return (
     <>
-      <h2 className='add_product'>Add Product</h2>
+      <h2 className='main_title'>Add Product</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
           <div className='custom_upload' onClick={openFileDialog}>
@@ -191,8 +195,8 @@ const ProductAdd = () => {
           </div>
         </div>
 
-        <div className='modal_btn_cover'>
-          <button type="button" className='cancel'><Link to="/dashboard/product">cancel</Link></button>
+        <div className='form_btn_cover'>
+          <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
           <button type="submit" className='btn' disabled={isEdit ? updateMutation.isPending : createMutation.isPending}>
             {(isEdit ? updateMutation.isPending : createMutation.isPending) ? (
               <ButtonLoader />

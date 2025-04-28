@@ -1,3 +1,5 @@
+/*************** Dashboard Heading *********************/ 
+
 .heading h2 {
     font-family: var(--family);
     font-weight: 700;
@@ -12,6 +14,8 @@
     font-size: 13px;
     color: rgba(82, 82, 108, 0.8);
 }
+
+/*************** Dashboard Top Bar Boxes *********************/ 
 
 .top_box {
     margin-top: 15px;
@@ -78,6 +82,8 @@
     opacity: 0.09;
 }
 
+/*************** Dashboard Charts *********************/ 
+
 .chart_wrap {
     margin-top: 25px;
     display: flex;
@@ -118,6 +124,8 @@
     justify-content: center;
 }
 
+
+/*************** Dashboard Table *********************/ 
 
 .dashboard_table_wrap {
     margin-top: 25px;
@@ -166,6 +174,9 @@
     min-width: 100px;
 }
 
+
+/*************** Table Blank *********************/ 
+
 .table_blank {
     min-height: 250px;
     display: flex;
@@ -193,17 +204,3 @@
     color: #000;
 }
 
-.pagination_wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 10px;
-}
-
-.pagination_wrap p {
-    font-family: var(--family);
-    font-weight: 300;
-    font-size: 14px;
-    text-transform: capitalize;
-    color: #000;
-}

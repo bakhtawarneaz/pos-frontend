@@ -13,4 +13,5 @@ const Switch = ({ className, isChecked, onToggle }) => {
   )
 }
 
-export default Switch
+ export default Switch
+

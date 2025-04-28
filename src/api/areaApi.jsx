@@ -15,3 +15,8 @@ export const updateArea = async (areaData) => {
     const response = await api.put(`/areas/update/${areaData.id}`, areaData);
     return response.data;
 };
+
+export const deleteArea = async (id) => {
+    const response = await api.delete(`/areas/delete/${id}`);
+    return response.data;
+};
