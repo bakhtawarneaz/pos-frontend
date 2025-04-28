@@ -1,6 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createProduct, updateProduct, deleteProduct } from '@api/productApi';
 import { createArea, updateArea, deleteArea } from '@api/areaApi';
+import { createBank, updateBank, deleteBank } from '@api/bankApi';
+import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
+import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
+import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { login } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -121,6 +125,227 @@ export const useDeleteArea = (closeDeleteModal) => {
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted area.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+/** Bank **/
+
+export function useCreateBank(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createBank,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Bank created!');
+      reset();
+      navigate('/dashboard/bank'); 
+      queryClient.invalidateQueries({ queryKey: ['bank'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create bank.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+
+export const useUpdateBank = (reset, closeModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateBank, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['bank']); 
+      toast.success(data?.message || 'Bank updated!');
+      closeModal();
+      reset(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update bank.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+export const useDeleteBank = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteBank,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['bank']);
+      toast.success(data?.message || 'Bank deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted bank.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+/** Brand **/
+
+export function useCreateBrand(navigate, reset, handleResetUpload) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createBrand,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Brand created!');
+      reset();
+      handleResetUpload();
+      navigate('/dashboard/brand'); 
+      queryClient.invalidateQueries({ queryKey: ['brand'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create brand.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+
+export const useUpdateBrand = (reset, closeModal, handleResetUpload) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateBrand, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['brand']); 
+      toast.success(data?.message || 'Brand updated!');
+      closeModal();
+      reset(); 
+      handleResetUpload();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update brand.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+export const useDeleteBrand = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteBrand,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['brand']);
+      toast.success(data?.message || 'Brand deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted brand.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+/** Customer **/
+
+export function useCreateCustomer(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createCustomer,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Customer created!');
+      reset();
+      navigate('/dashboard/customer'); 
+      queryClient.invalidateQueries({ queryKey: ['customer'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create customer.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+
+export const useUpdateCustomer = (reset, closeModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateCustomer, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['customer']); 
+      toast.success(data?.message || 'Customer updated!');
+      closeModal();
+      reset(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update customer.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+export const useDeleteCustomer = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteCustomer,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['customer']);
+      toast.success(data?.message || 'Customer deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted customer.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+/** Employee **/
+
+export function useCreateEmployee(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createEmployee,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Employee created!');
+      reset();
+      navigate('/dashboard/employee'); 
+      queryClient.invalidateQueries({ queryKey: ['employee'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create employee.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+
+export const useUpdateEmployee = (reset, closeModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateEmployee, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['employee']); 
+      toast.success(data?.message || 'Employee updated!');
+      closeModal();
+      reset(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update employee.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+export const useDeleteEmployee = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteEmployee,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['employee']);
+      toast.success(data?.message || 'Employee deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted employee.';
       toast.error(errorMessage);
     },
   });
