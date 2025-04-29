@@ -207,7 +207,7 @@ export function useCreateBrand(navigate, reset, handleResetUpload) {
 }
 
 
-export const useUpdateBrand = (reset, navigate, handleResetUpload) => {
+export const useUpdateBrand = (navigate , reset, handleResetUpload) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBrand, 

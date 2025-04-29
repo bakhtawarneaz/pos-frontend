@@ -131,57 +131,40 @@ const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
       <h2 className='main_title'>Add Brand</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
-          <div className='pdf_upload' onClick={openFileDialog}>
-              {!isUploading && (
-                <div className='upload_cover'>
-                  <input type="file" {...register('fileUrl', { required: true })} onChange={handleFileChange} ref={fileInputRef} />
+          <div className='pdf_upload' >
+              <div className='upload_cover' onClick={openFileDialog}>
+                  <input
+                      type="file"
+                      {...register('fileUrl', {
+                        validate: () => uploadedImage ? true : 'File is required',
+                      })}
+                      onChange={handleFileChange}
+                      ref={fileInputRef}
+                  />
                   <button type="button" className='upload_btn'>
                     <span className='icon'><IoCloudUploadOutline /></span>
                     <span className='txt'>browse to upload file</span>
                   </button>
                 </div>
-              )}
                 {uploadedImage && (
-                    <>
-                        <div className='pdf_file_loading'>
-                            <span className='pdf_icon'><BsFileEarmarkPdf /></span>
-                            <p>{uploadedImage.split('/').pop()}</p>
-                            <button onClick={handleResetUpload}><FaRegTrashAlt /></button>
-                        </div>
-                        <div className='loading_bar'>
-                            <span className='progress' style={{ width: `${progress}%` }}></span>
-                        </div>
-                    </>
+                <>
+                  <div className='pdf_file_loading'>
+                      <span className='pdf_icon'><BsFileEarmarkPdf /></span>
+                      <p>{uploadedImage.split('/').pop()}</p>
+                      <button onClick={handleResetUpload}><FaRegTrashAlt /></button>
+                  </div>
+                </>
                 )}
-              {/* <div className='pdf_file_loadin'>
-                  <div className='loading_bar'>
-                    <p>{uploadedImage}</p>
-                    <span className='progress' style={{ width: `${progress}%` }}></span>
+                {isUploading && (
+                  <div className='pdf_progress_cover'>
+                    <span className='pdf_progress_title'>uploading...</span>
+                    <span className='pdf_loading_bar'>
+                      <span className='pdf_progress' style={{ width: `${progress}%` }}></span>
+                    </span>
                   </div>
-                  <div className='upload_reset'>
-                    <button onClick={handleResetUpload}><FaRegTrashAlt /></button>
-                  </div>
-              </div> */}
-              {/* {isUploading && (
-                <div className='upload_loading'>
-                  <span className='loading_title'>uploading...</span>
-                  <span className='loading_bar'>
-                    <span className='progress' style={{ width: `${progress}%` }}></span>
-                  </span>
-                </div>
-              )}
-              {uploadedImage && (
-                <div className='upload_loading'>
-                  <img src={uploadedImage} alt="Uploaded" />
-                </div>
-              )}
-              {uploadedImage && (
-                <div className='upload_reset'>
-                  <button onClick={handleResetUpload}><FaRegTrashAlt /></button>
-                </div>
-              )} */}
+                )}
           </div>
-          {errors.fileUrl && <p className='error'>Product Image is required</p>}
+          {errors.fileUrl && <p className='error'>File is required</p>}
         </div>
 
         <div className='middle_form_group'>
@@ -230,13 +213,13 @@ const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
             {errors.ntn && <p className='error'>Ntn is required</p>}
           </div>
 
-
-
-          <div className='form_group'>
-            <label>Opening Balance</label>
-            <input type="text" placeholder='Opening Balance' {...register('opening_balance', { required: true })} className='form_control' />
-            {errors.opening_balance && <p className='error'>Opening Balance is required</p>}
-          </div>
+          {!isEdit && (
+            <div className='form_group'>
+              <label>Opening Balance</label>
+              <input type="text" placeholder='Opening Balance' {...register('opening_balance', { required: true })} className='form_control' />
+              {errors.opening_balance && <p className='error'>Opening Balance is required</p>}
+            </div>
+          )}
 
         </div>
 
