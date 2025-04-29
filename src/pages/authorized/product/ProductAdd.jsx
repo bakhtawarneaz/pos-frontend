@@ -116,7 +116,7 @@ const ProductAdd = () => {
     }
   };
 
-  const handleRedirect = (row) => {
+  const handleRedirect = () => {
     navigate('/dashboard/product');
   };
 

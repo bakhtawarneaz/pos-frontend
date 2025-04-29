@@ -12,15 +12,15 @@ import ButtonLoader from '@components/ButtonLoader';
 
 const BankAdd = () => {
 
-    const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
 
-    /* Hooks...*/
-    const location = useLocation();
-    const navigate = useNavigate();
+  /* Hooks...*/
+  const location = useLocation();
+  const navigate = useNavigate();
 
 
-   /* UseState Here...*/
-   const { bank, isEdit } = location.state || {};
+  /* UseState Here...*/
+  const { bank, isEdit } = location.state || {};
 
   /* Mutations */
   const createMutation = useCreateBank(navigate, reset);
@@ -54,7 +54,7 @@ const BankAdd = () => {
       }
   };
 
-  const handleRedirect = (row) => {
+  const handleRedirect = () => {
     navigate('/dashboard/bank');
   };  
 

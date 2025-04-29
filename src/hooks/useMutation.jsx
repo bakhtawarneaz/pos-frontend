@@ -317,7 +317,7 @@ export function useCreateEmployee(navigate, reset) {
 }
 
 
-export const useUpdateEmployee = (reset, navigate) => {
+export const useUpdateEmployee = (navigate , reset ) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateEmployee, 

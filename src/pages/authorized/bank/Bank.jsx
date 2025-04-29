@@ -30,7 +30,7 @@ const Bank = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isReloading, setIsReloading] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deletingArea, setDeletingArea] = useState(null);
+  const [deletingBank, setDeletingBank] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -46,18 +46,18 @@ const Bank = () => {
   const deleteMutation = useDeleteBank(closeDeleteModal);
 
 
-  const openDeleteModal = (area) => {
-    setDeletingArea(area);
+  const openDeleteModal = (bank) => {
+    setDeletingBank(bank);
     setDeleteModalOpen(true);
   };
 
   function closeDeleteModal() {
-    setDeletingArea(null);
+    setDeletingBank(null);
     setDeleteModalOpen(false);
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(deletingArea.id);
+    deleteMutation.mutate(deletingBank.id);
   };
 
   const handleEdit = (row) => {
@@ -150,7 +150,7 @@ const Bank = () => {
       </div>
       <ModalComponent isOpen={deleteModalOpen} onClose={closeDeleteModal}>
       <h2><FiAlertTriangle /> Delete bank</h2>
-      <p>Are you sure you want to delete <strong>{deletingArea?.bank_name}</strong>?</p>
+      <p>Are you sure you want to delete <strong>{deletingBank?.bank_name}</strong>?</p>
       
       <div className='form_btn_cover'>
         <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>

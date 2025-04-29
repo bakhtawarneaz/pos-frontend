@@ -575,3 +575,80 @@ form .error {
     font-size: 14px;
 }
 
+
+.pdf_upload .upload_cover{
+    background: transparent;
+    width: 400px;
+    height: 200px;
+    border: 2px dashed var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.pdf_upload .upload_cover input[type="file"] {
+    display: none;
+}
+
+.pdf_upload .upload_btn .icon svg {
+    color: #fff;
+    font-size: 40px;
+}
+
+.pdf_upload .upload_btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload_btn .icon  {
+    width: 100px;
+    height: 100px;
+    background: var(--primary-color);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.upload_btn .icon svg {
+    color: #fff;
+    font-size: 40px;
+}
+
+.pdf_file_loading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    background: #f4f4f5;
+    padding: 10px 10px;
+    border-radius: 5px;
+    width: 500px;
+}
+
+.pdf_file_loading .pdf_icon svg {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.pdf_file_loading p {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.pdf_file_loading button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.pdf_file_loading button svg {
+    font-size: 20px;
+    color: var(--primary-color);
+}
