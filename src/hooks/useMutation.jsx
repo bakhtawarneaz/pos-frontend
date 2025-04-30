@@ -263,7 +263,7 @@ export function useCreateCustomer(navigate, reset) {
 }
 
 
-export const useUpdateCustomer = (reset, navigate) => {
+export const useUpdateCustomer = (navigate, reset) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateCustomer, 

@@ -1,0 +1,148 @@
+.invoice_wrap .left {
+    margin-bottom: 25px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.invoice_wrap .brand_field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.invoice_wrap .customer_field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.invoice_wrap .form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.invoice_wrap .form_group label {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+.invoice_wrap .form_group .form_control {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 12px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.product_items_wrap h3 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.product_items_wrap table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dbdade;
+    margin: 15px 0;
+}
+
+.product_items_wrap table thead {
+    background-color: #f4f4f580;
+}
+
+.product_items_wrap table thead th {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(82, 82, 108, 0.8);
+    padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+    text-transform: capitalize;
+}
+
+.product_items_wrap table tbody td {
+    padding: 10px 10px;
+}
+
+.product_items_wrap table tbody select {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 8px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.product_items_wrap table tbody input {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 8px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.product_items_wrap table tbody .remove {
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.product_items_wrap table tbody .remove svg {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.product_items_wrap .add {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
+    outline: none;
+    border: 1px solid #dbdade;
+}

@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 /* hooks... */
-import { useCreateBrand, useUpdateBrand } from '@hooks/useMutation';
+import { useCreateCustomer, useUpdateCustomer } from '@hooks/useMutation';
+import { useFetchArea } from '@hooks/useQuery';
 
 /* api...*/
 import { uploadFile } from '@api/uploadApi';
@@ -19,7 +20,7 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 /* components...*/
 import ButtonLoader from '@components/ButtonLoader';
 
-const BrandAdd = () => {
+const CustomerAdd = () => {
 
 const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset } = useForm();
 
@@ -33,34 +34,39 @@ const fileInputRef = useRef(null);
 const [isUploading, setIsUploading] = useState(false); 
 const [uploadedImage, setUploadedImage] = useState(''); 
 const [progress, setProgress] = useState(0);
-const { brand, isEdit } = location.state || {};
+const { customer, isEdit } = location.state || {};
 
 /* Mutations */
-const createMutation = useCreateBrand(navigate, reset, handleResetUpload);
-const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
+const createMutation = useCreateCustomer(navigate, reset, handleResetUpload);
+const updateMutation = useUpdateCustomer(navigate, reset, handleResetUpload);
+
+/* Queries */
+const { data: areaData } = useFetchArea({ page: 1, perPage: 'all' });
+const area = areaData?.data?.data || [];
 
 
   /* Effects */
   useEffect(() => {
-    if (isEdit && brand) {
-      setValue('name', brand.name);
-      setValue('code', brand.code);
-      setValue('address', brand.address);
-      setValue('city', brand.city);
-      setValue('contact', brand.contact);
-      setValue('fax', brand.fax);
-      setValue('ntn', brand.ntn);
-      setUploadedImage(brand.fileUrl);
+    if (isEdit && customer) {
+      setValue('name', customer.name);
+      setValue('code', customer.code);
+      setValue('address', customer.address);
+      setValue('party_type', customer.party_type);
+      setValue('contact_no', customer.contact_no);
+      setValue('proprietor', customer.proprietor);
+      setValue('area_id', customer.area_id);
+      setValue('running_balance', customer.running_balance);
+      setUploadedImage(customer.fileUrl);
     }
-  }, [isEdit, brand, setValue]);
+  }, [isEdit, customer, setValue]);
 
 
   /* Functions Here...*/
   const onSubmit = (data) => {
-     if (isEdit  && brand) {
+     if (isEdit  && customer) {
           const PAY_LOAD = {
             ...data,
-            id: brand.id,
+            id: customer.id,
         };
         updateMutation.mutate(PAY_LOAD);
       } else {
@@ -123,12 +129,12 @@ const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
   };
 
   const handleRedirect = () => {
-    navigate('/dashboard/brand');
+    navigate('/dashboard/customer');
   };
-  
+
   return (
-  <>
-      <h2 className='main_title'>Add Brand</h2>
+<>
+      <h2 className='main_title'>Add Customer</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
           <div className='pdf_upload' >
@@ -190,27 +196,40 @@ const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
           
 
           <div className='form_group'>
-            <label>City</label>
-            <input type="text" placeholder='City' {...register('city', { required: true })} className='form_control' />
-            {errors.city && <p className='error'>City is required</p>}
+            <label>Party Type</label>
+            <select {...register('party_type', { required: true })} className='form_control'>
+              <option value="">Select Party Type</option>
+              <option value="1">Distributor</option>
+              <option value="2">Wholseller</option>
+              <option value="3">Retailor</option>
+              <option value="4">Supplier</option>
+            </select>
+            {errors.party_type && <p className='error'>Party Type is required</p>}
           </div>
 
           <div className='form_group'>
             <label>Contact</label>
-            <input type="text" placeholder='Contact' {...register('contact', { required: true })} className='form_control' />
-            {errors.contact && <p className='error'>Contact is required</p>}
+            <input type="text" placeholder='Contact' {...register('contact_no', { required: true })} className='form_control' />
+            {errors.contact_no && <p className='error'>Contact is required</p>}
           </div>
 
           <div className='form_group'>
-            <label>Fax</label>
-            <input type="text" placeholder='Fax' {...register('fax', { required: true })} className='form_control' />
-            {errors.fax && <p className='error'>Fax is required</p>}
+            <label>Proprietor</label>
+            <input type="text" placeholder='Proprietor' {...register('proprietor', { required: true })} className='form_control' />
+            {errors.proprietor && <p className='error'>Proprietor is required</p>}
           </div>
 
           <div className='form_group'>
-            <label>Ntn</label>
-            <input type="text" placeholder='Ntn' {...register('ntn', { required: true })} className='form_control' />
-            {errors.ntn && <p className='error'>Ntn is required</p>}
+            <label>Area Name</label>
+            <select {...register('area_id', { required: true })} className='form_control'>
+              <option value="">Select Area</option>
+                {area.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.area_name}
+                  </option>
+                ))}
+            </select>
+            {errors.area_id && <p className='error'>Area Name is required</p>}
           </div>
 
           {!isEdit && (
@@ -238,4 +257,4 @@ const updateMutation = useUpdateBrand(navigate, reset, handleResetUpload);
   )
 }
 
-export default BrandAdd
+export default CustomerAdd

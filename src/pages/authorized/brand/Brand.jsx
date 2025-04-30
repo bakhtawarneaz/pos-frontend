@@ -10,6 +10,7 @@ import { FiPlus } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
+import { BsFileEarmarkPdf } from "react-icons/bs";
 
 /* styles...*/
 import '@styles/_product.css'
@@ -91,6 +92,25 @@ const Brand = () => {
 
   const columns = [
       { key: "id", label: "ID" },
+      {
+        key: "fileUrl",
+        label: "File",
+        render: (row) =>
+          row.fileUrl ? (
+            <a
+              href={row.fileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              style={{ color: "#d32f2f" }}
+              title="Download PDF"
+            >
+              <BsFileEarmarkPdf size={25} />
+            </a>
+          ) : (
+            "-"
+          ),
+      },
       { key: "code", label: "Code" },
       { key: "name", label: "Name" },
       { key: "address", label: "Address" },
