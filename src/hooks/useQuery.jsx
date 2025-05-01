@@ -5,6 +5,7 @@ import { getBrand } from '@api/brandApi';
 import { getCustomer } from '@api/customerApi';
 import { getEmployee } from '@api/employeeApi';
 import { getBank } from '@api/bankApi';
+import { getInvoice } from '@api/invoiceApi';
 
 /** Organization **/
 export function useFetchProduct({ page, perPage }) {
@@ -56,6 +57,16 @@ export function useFetchBank({ page, perPage }) {
     return useQuery({
         queryKey: ['bank', page, perPage],
         queryFn: () => getBank({ page, perPage }),
+        staleTime: 60 * 60 * 1000,
+    });
+}
+
+
+/** Invoice **/
+export function useFetchInvoice({ page, perPage }) {
+    return useQuery({
+        queryKey: ['invoice', page, perPage],
+        queryFn: () => getInvoice({ page, perPage }),
         staleTime: 60 * 60 * 1000,
     });
 }

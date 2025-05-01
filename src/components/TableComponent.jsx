@@ -4,6 +4,7 @@ import PaginationComponent from './PaginationComponent';
 import TableSummary from './TableSummary';
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FiEye } from "react-icons/fi";
 
 const TableComponent = ({
   columns = [],
@@ -14,12 +15,15 @@ const TableComponent = ({
   totalPages = 0,
   onPageChange = () => {},
   onEdit = () => {},
+  onView  = () => {},
   onDelete = () => {},
   showAction = true,
   showSummary = true,
   showPagination = true,
   isLoading = false,
   showDeleteAction = false,
+  showEditAction = true,
+  showViewAction = false
 }) => {
   return (
     <>
@@ -60,14 +64,21 @@ const TableComponent = ({
               <tr key={rowIndex}>
                 {columns.map((col, colIndex) => (
                   <td key={colIndex}>
-                    {col.render ? col.render(row) : row[col.key]}
+                    {col.render ? col.render(row) : (row[col.key] != null && row[col.key] !== '' ? row[col.key] : '-')}
                   </td>
                 ))}
                 {showAction && (
                   <td className='action_wrap'>
-                    <button onClick={() => onEdit(row)} className="table_action">
-                      <FaRegEdit />
-                    </button>
+                    {showViewAction && ( 
+                      <button onClick={() => onView(row)} className="table_action">
+                        <FiEye />
+                      </button>
+                    )}
+                    {showEditAction && ( 
+                      <button onClick={() => onEdit(row)} className="table_action">
+                        <FaRegEdit />
+                      </button>
+                    )}
                     {showDeleteAction && ( 
                       <button onClick={() => onDelete(row)} className="table_action delete">
                         <FaRegTrashAlt />

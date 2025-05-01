@@ -146,3 +146,16 @@
     outline: none;
     border: 1px solid #dbdade;
 }
+
+
+.card_body::-webkit-scrollbar {
+    height: 3px;
+}
+
+.card_body::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+}
+
+.card_body::-webkit-scrollbar-track {
+    background: #d1d2d4;
+}

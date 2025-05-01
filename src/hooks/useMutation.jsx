@@ -5,6 +5,7 @@ import { createBank, updateBank, deleteBank } from '@api/bankApi';
 import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
+import { createInvoice, deleteInvoice } from '@api/invoiceApi';
 import { login } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -346,6 +347,43 @@ export const useDeleteEmployee = (closeDeleteModal) => {
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted employee.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+
+/** Invoice **/
+
+export function useCreateInvoice(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createInvoice,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Invoice created!');
+      reset();
+      navigate('/dashboard/invoice'); 
+      queryClient.invalidateQueries({ queryKey: ['invoice'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create invoice.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+export const useDeleteInvoice = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteInvoice,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['invoice']);
+      toast.success(data?.message || 'Invoice deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted invoice.';
       toast.error(errorMessage);
     },
   });
