@@ -34,7 +34,7 @@ api.interceptors.request.use(
 			throw new axios.Cancel("Token expired, user logged out.");
 		}
 
-		request.headers["Authorization"] = `Bearer ${token}`;
+		request.headers["Authorization"] = `${token}`;
 
 		return request;
 	},

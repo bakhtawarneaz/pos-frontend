@@ -63,10 +63,10 @@ export function useFetchBank({ page, perPage }) {
 
 
 /** Invoice **/
-export function useFetchInvoice({ page, perPage }) {
+export function useFetchInvoice(filters) {
     return useQuery({
-        queryKey: ['invoice', page, perPage],
-        queryFn: () => getInvoice({ page, perPage }),
+        queryKey: ['invoice', filters],
+        queryFn: () => getInvoice(filters),
         staleTime: 60 * 60 * 1000,
     });
 }

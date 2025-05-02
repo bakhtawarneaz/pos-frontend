@@ -147,6 +147,153 @@
     border: 1px solid #dbdade;
 }
 
+.filters {
+    display: flex;
+    gap: 15px;
+}
+
+.filters select {
+    width: 100%;
+    border: 1px solid #dbdade;
+    color: #6f6b7d;
+    border-radius: 1px;
+    padding: 10px 15px;
+    outline: none;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.filters select[disabled] {
+    cursor: not-allowed;
+}
+
+.filters button {
+    background-color: var(--primary-color);
+    box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.4);
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #fff;
+    border: 0;
+}
+
+.filters button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.filters button.btn_clear {
+    box-shadow: 0px 2px 4px rgba(165, 163, 174, 0.4);
+    padding: 10px 20px;
+    border-radius: 2px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: capitalize;
+    background: transparent;
+    color: #000;
+}
+
+.modal_content.invoice_modal_wi {
+    max-width: 1200px;
+}
+
+.invoice_detail_top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.invoice_detail_top p {
+    margin-bottom: 10px;
+}
+
+.invoice_detail_item {
+    margin-bottom: 20px;
+}
+
+.invoice_detail_item table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dbdade;
+}
+
+.invoice_detail_item table thead {
+    background-color: #f4f4f580;
+}
+
+.invoice_detail_item table thead th {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(82, 82, 108, 0.8);
+    padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+    text-transform: capitalize;
+}
+
+.invoice_detail_item table td {
+    padding: 10px 10px;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    min-width: 100px;
+    text-transform: capitalize;
+}
+
+.invoice_detail_item table tbody tr {
+    border-bottom: 1px solid #dbdade;
+}
+
+.invoice_detail_item table tbody tr:last-child {
+    border: 0;
+}
+
+.summary_invoice_detail {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.summary_container {
+    border: 1px solid #000;
+    width: 30%;
+}
+
+.summary_row {
+    border-bottom: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.summary_row:last-child {
+    border: 0;
+}
+
+.summary_row .label {
+    font-family: var(--family);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.summary_row .value {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+
 
 .card_body::-webkit-scrollbar {
     height: 3px;

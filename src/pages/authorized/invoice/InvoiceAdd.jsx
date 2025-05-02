@@ -2,9 +2,11 @@ import React from 'react'
 
 /* packages...*/
 import { useForm } from 'react-hook-form';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 /* hooks... */
+import { useCreateInvoice } from '@hooks/useMutation';
 import { useFetchBrand } from '@hooks/useQuery';
 import { useFetchCustomer } from '@hooks/useQuery';
 import { useFetchProduct } from '@hooks/useQuery'; 
@@ -16,14 +18,20 @@ import '@styles/_invoice.css'
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 
+/* components...*/
+import ButtonLoader from '@components/ButtonLoader';
+
+
 const InvoiceAdd = () => {
 
-  const { control, register, handleSubmit, formState: { errors }, setValue, clearErrors, reset, watch } = useForm();
+  const { control, register, handleSubmit, formState: { errors }, clearErrors, reset, watch } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'details'
   });
   const invoiceType = watch('type');
+
+  const navigate = useNavigate();
 
   /* Queries */
   const { data: brandData } = useFetchBrand({ page: 1, perPage: 'all' });
@@ -35,10 +43,21 @@ const InvoiceAdd = () => {
   const { data: productData } = useFetchProduct({ page: 1, perPage: 'all' });
   const products = productData?.data?.data || [];
 
+  /* Mutations */
+  const createMutation = useCreateInvoice(navigate, reset);
+
+  const onSubmit = (data) => {
+    console.log(data)
+ };
+
+  const handleRedirect = () => {
+    navigate('/dashboard/invoice');
+  };
+
   return (
     <>
       <h2 className='main_title'>Create Invoice</h2>
-      <form className='inner_form'>
+      <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
 
         <div className='invoice_wrap'>
             <div className='left'>
@@ -226,6 +245,16 @@ const InvoiceAdd = () => {
                 >
                     <FiPlus /> Add Item
                 </button>
+            </div>
+            <div className='form_btn_cover'>
+            <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
+            <button type="submit" className='btn' disabled={createMutation.isPending}>
+                { createMutation.isPending ? (
+                <ButtonLoader />
+                ) : (
+                 'Create Invoice'
+                )}
+            </button>
             </div>
         </div>
 

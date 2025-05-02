@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
 /* components...*/
 import TableComponent from '@components/TableComponent';
@@ -8,7 +8,6 @@ import InvoiceDetailsComponent from '@components/InvoiceDetailsComponent';
 
 /* icons...*/
 import { FiPlus } from "react-icons/fi";
-import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
 
@@ -37,6 +36,7 @@ const Invoice = () => {
     const [invoiceModeFilter, setInvoiceModeFilter] = useState("");
     const [brandFilter, setBrandFilter] = useState("");
     const [customerFilter, setCustomerFilter] = useState("");
+    const [isSearching, setIsSearching] = useState(false);
     const [filters, setFilters] = useState({ page, perPage, invoice_type: null, brand_id: null, customer_id: null });
     const queryClient = useQueryClient();
     const INVOICE_MODE_MAP = {
@@ -103,13 +103,38 @@ const Invoice = () => {
     };
 
     const handleSearch = () => {
-      setFilters({
-        page: 1,
-        perPage,
-        invoice_type: invoiceModeFilter || null,
-        brand_id: brandFilter || null,
-        customer_id: customerFilter || null
-      });
+      setIsSearching(true);
+      try {
+        setFilters({
+          page: 1,
+          perPage,
+          invoice_type: invoiceModeFilter ? parseInt(invoiceModeFilter) : null,
+          brand_id: brandFilter ? parseInt(brandFilter) : null,
+          customer_id: customerFilter ? parseInt(customerFilter) : null
+        });
+        setPage(1);
+      } finally {
+        setTimeout(() => setIsSearching(false), 500);
+      }
+    };
+
+    const handleClear = () => {
+      setInvoiceModeFilter("");
+      setBrandFilter("");
+      setCustomerFilter("");
+      setFilters({ page: 1, perPage: 'all' });
+      setPage(1);
+    };
+
+    const handleInvoiceModeChange = (value) => {
+      setInvoiceModeFilter(value);
+      setBrandFilter("");
+      setCustomerFilter("");
+      if (value === "") {
+        setBrandFilter("");
+        setCustomerFilter("");
+        setFilters({ page: 1, perPage: 'all' });
+      }
     };
     
     const columns = [
@@ -155,26 +180,42 @@ const Invoice = () => {
           <div className='bottom'>
           <div className='bottom'>
               <div className="filters">
-                <select value={invoiceModeFilter} onChange={(e) => setInvoiceModeFilter(e.target.value)}>
+                <select value={invoiceModeFilter} onChange={(e) => handleInvoiceModeChange(e.target.value)}>
                   <option value="">Invoice Type</option>
                   <option value="1">Purchase</option>
                   <option value="2">Sale</option>
                   <option value="3">Purchase Return</option>
                   <option value="4">Sale Return</option>
                 </select>
-                <select value={brandFilter} onChange={(e) => setBrandFilter(e.target.value)}>
+                <select 
+                  value={brandFilter} 
+                  onChange={(e) => setBrandFilter(e.target.value)} 
+                  disabled={!invoiceModeFilter || invoiceModeFilter === "2" || invoiceModeFilter === "4"}
+                 >
                   <option value="">All Brands</option>
                   {brand.map((b) => (
                     <option key={b.id} value={b.id}>{b.name}</option>
                   ))}
                 </select>
-                <select value={customerFilter} onChange={(e) => setCustomerFilter(e.target.value)}>
+                <select 
+                  value={customerFilter} 
+                  onChange={(e) => setCustomerFilter(e.target.value)} 
+                  disabled={!invoiceModeFilter || invoiceModeFilter === "1" || invoiceModeFilter === "3"}
+                >
                   <option value="">All Customers</option>
                   {customer.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
                 </select>
-                <button onClick={handleSearch}>Search</button>
+                {(invoiceModeFilter || brandFilter || customerFilter) && (
+                  <button onClick={handleClear} className="btn_clear">Clear</button>
+                )}
+                <button 
+                 onClick={handleSearch} 
+                 disabled={isSearching || (!invoiceModeFilter && !brandFilter && !customerFilter)}
+                >
+                  {isSearching ? <ButtonLoader /> : 'Search'}
+                </button>
               </div>
             </div>
           </div>
@@ -210,7 +251,7 @@ const Invoice = () => {
             </button>
           </div>
       </ModalComponent> 
-      <ModalComponent isOpen={!!viewInvoice} onClose={closeViewModal}>
+      <ModalComponent isOpen={!!viewInvoice} onClose={closeViewModal} className="invoice_modal_wi">
         <InvoiceDetailsComponent invoice={viewInvoice} />
       </ModalComponent>
       </>
