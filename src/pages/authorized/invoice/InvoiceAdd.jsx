@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 /* packages...*/
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import { useCreateInvoice } from '@hooks/useMutation';
 import { useFetchBrand } from '@hooks/useQuery';
 import { useFetchCustomer } from '@hooks/useQuery';
 import { useFetchProduct } from '@hooks/useQuery'; 
+import { brandBalance, customerBalance } from '@api/invoiceApi'; 
 
 /* styles...*/
 import '@styles/_invoice.css'
@@ -24,12 +25,15 @@ import ButtonLoader from '@components/ButtonLoader';
 
 const InvoiceAdd = () => {
 
-  const { control, register, handleSubmit, formState: { errors }, clearErrors, reset, watch } = useForm();
+  const { control, register, handleSubmit, formState: { errors }, setValue, reset, watch, clearErrors } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'details'
   });
   const invoiceType = watch('type');
+  const invoiceMode = watch('invoice_type');
+  const [runningBalance, setRunningBalance] = useState(0);
+  
 
   const navigate = useNavigate();
 
@@ -47,12 +51,67 @@ const InvoiceAdd = () => {
   const createMutation = useCreateInvoice(navigate, reset);
 
   const onSubmit = (data) => {
-    console.log(data)
+    const { invoice_type } = data;
+    let cleanedDetails = [];
+
+    if (invoice_type === '3' || invoice_type === '4') {
+        cleanedDetails = data.details.map(d => ({
+        product_id: d.product_id,
+        quantity: d.quantity
+        }));
+    } else {
+        cleanedDetails = data.details;
+    }
+
+    const PAY_LOAD = {
+        ...data,
+        details: cleanedDetails
+    };
+    createMutation.mutate(PAY_LOAD);
  };
 
-  const handleRedirect = () => {
+ const handleTypeChange = async (e) => {
+    const selectedId = e.target.value;
+    setValue('type_id', selectedId);
+    if (!selectedId) {
+      setRunningBalance(0);
+      return;
+    }
+    try {
+      let balance = 0;
+      if (invoiceType === '1') {
+        const response = await brandBalance({ brand_id: selectedId });
+        balance = response.data.balance;
+      } else if (invoiceType === '2') {
+        const response = await customerBalance({ customer_id: selectedId });
+        balance = response.data.balance;
+      }
+      setRunningBalance(balance);
+    } catch (error) {
+      console.error('Error fetching balance:', error);
+      setRunningBalance(0);
+    }
+};
+
+const handleInvoiceTypeChange = (e) => {
+    const type = e.target.value;
+    setValue('type', type);
+    setValue('type_id', '');
+    setRunningBalance(0);
+    clearErrors();
+};
+
+const handleInvoiceModeChange = (e) => {
+    const selectedMode = e.target.value;
+    setValue('invoice_type', selectedMode);   
+    clearErrors('reason');                   
+    setValue('reason', '');                 
+};
+
+
+const handleRedirect = () => {
     navigate('/dashboard/invoice');
-  };
+};
 
   return (
     <>
@@ -63,7 +122,7 @@ const InvoiceAdd = () => {
             <div className='left'>
                 <div className='form_group'>
                     <label>Invoice Mode</label>
-                    <select {...register('invoice_type', { required: true })} className='form_control'>
+                    <select {...register('invoice_type', { required: true })} className='form_control' onChange={handleInvoiceModeChange}>
                     <option value="">Select Invoice Mode</option>
                     <option value="1">Purchase</option>
                     <option value="2">Sale</option>
@@ -74,7 +133,7 @@ const InvoiceAdd = () => {
                 </div>
                 <div className='form_group'>
                     <label>Invoice Type</label>
-                    <select {...register('type', { required: true })} className='form_control'>
+                    <select {...register('type', { required: true })} className='form_control' onChange={handleInvoiceTypeChange}>
                     <option value="">Select Invoice Type</option>
                     <option value="1">Company</option>
                     <option value="2">Customer</option>
@@ -84,13 +143,13 @@ const InvoiceAdd = () => {
                 {invoiceType === '1' && (
                     <div className='form_group'>
                         <label>Select Brand</label>
-                        <select {...register('type_id', { required: true })} className='form_control'>
+                        <select {...register('type_id', { required: true })} className='form_control' onChange={handleTypeChange}>
                         <option value="">Select Brand</option>
-                        {brand.map((item) => (
-                            <option key={item.id} value={item.id}>
-                            {item.name}
-                            </option>
-                        ))}
+                            {brand.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                {item.name}
+                                </option>
+                            ))}
                         </select>
                         {errors.type_id && <p className='error'>Brand is required</p>}
                     </div>
@@ -98,20 +157,20 @@ const InvoiceAdd = () => {
                 {invoiceType === '2' && (
                     <div className='form_group'>
                         <label>Select Customer</label>
-                        <select {...register('type_id', { required: true })} className='form_control'>
+                        <select {...register('type_id', { required: true })} className='form_control' onChange={handleTypeChange}>
                         <option value="">Select Customer</option>
-                        {customer.map((item) => (
-                            <option key={item.id} value={item.id}>
-                            {item.name}
-                            </option>
-                        ))}
+                            {customer.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                {item.name}
+                                </option>
+                            ))}
                         </select>
                         {errors.type_id && <p className='error'>Customer is required</p>}
                     </div>
                 )}     
                 <div className='form_group'>
                     <label>Running Balance</label>
-                    <input type="text" placeholder='Running Balance' {...register('per_balance', { required: true })} className='form_control' />
+                    <input type="text" value={runningBalance} disabled placeholder='Running Balance' {...register('per_balance', { required: true })} className='form_control' />
                     {errors.per_balance && <p className='error'>Running Balance is required</p>}
                 </div>  
             </div>
@@ -175,6 +234,15 @@ const InvoiceAdd = () => {
                         <label>Extra Discount</label>
                         <input type="text" placeholder='Extra Discount' {...register('extra_discount', { required: true })} className='form_control' />
                         {errors.extra_discount && <p className='error'>Extra Discount is required</p>}
+                    </div>
+                </div>
+            )}
+            {(invoiceMode === '3' || invoiceMode === '4') && (
+                <div className='reason_field'>
+                    <div className='form_group'>
+                        <label>Reason</label>
+                        <textarea type="text" placeholder="Reason" {...register('reason', { required: true })} className='form_control'></textarea>
+                        {errors.reason && <p className='error'>Reason is required</p>}
                     </div>
                 </div>
             )}

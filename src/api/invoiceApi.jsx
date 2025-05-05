@@ -1,5 +1,4 @@
 import api from '@config/axiosConfig';
-import toast from 'react-hot-toast';
 
 
 export const createInvoice = async (data) => {
@@ -9,18 +8,21 @@ export const createInvoice = async (data) => {
 
 
 export const getInvoice = async (filters) => {
-    try {
-        const response = await api.post('/invoices/get',filters);
-        return response.data;
-    } 
-    catch (error) {
-        const errMessage = error.response?.data?.message || "Something went wrong";
-        toast.error(errMessage);
-    }
-
+    const response = await api.post('/invoices/get',filters);
+    return response.data;
 };
 
 export const deleteInvoice = async (invoice_id) => {
     const response = await api.post('/invoices/delete',  { invoice_id });
+    return response.data;
+};
+
+export const brandBalance = async (brand_id) => {
+    const response = await api.post('/brands/balance', brand_id);
+    return response.data;
+};
+
+export const customerBalance = async (customer_id) => {
+    const response = await api.post('/customers/balance', customer_id);
     return response.data;
 };
