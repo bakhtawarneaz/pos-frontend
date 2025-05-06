@@ -152,12 +152,12 @@ const Invoice = () => {
       { 
         key: "invoice_type", 
         label: "Invoice Mode",
-        render: (row) => INVOICE_MODE_MAP[row.invoice_type] || "-"
+        render: (row) => INVOICE_MODE_MAP[row.invoice_mode] || "-"
       },
       { 
         key: "type", 
         label: "Invoice Type",
-        render: (row) => INVOICE_TYPE_MAP[row.type] || "-"
+        render: (row) => INVOICE_TYPE_MAP[row.invoice_type] || "-"
       },
       { 
         key: "date", 

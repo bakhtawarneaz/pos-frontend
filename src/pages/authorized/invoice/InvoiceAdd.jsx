@@ -4,12 +4,15 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import { Controller } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 /* hooks... */
 import { useCreateInvoice } from '@hooks/useMutation';
 import { useFetchBrand } from '@hooks/useQuery';
 import { useFetchCustomer } from '@hooks/useQuery';
-import { useFetchProduct } from '@hooks/useQuery'; 
+import { useFetchProduct, useFetchArea } from '@hooks/useQuery'; 
 import { brandBalance, customerBalance } from '@api/invoiceApi'; 
 
 /* styles...*/
@@ -47,24 +50,41 @@ const InvoiceAdd = () => {
   const { data: productData } = useFetchProduct({ page: 1, perPage: 'all' });
   const products = productData?.data?.data || [];
 
+  const { data: areaData } = useFetchArea({ page: 1, perPage: 'all' });
+  const areas = areaData?.data?.data || [];
+
   /* Mutations */
   const createMutation = useCreateInvoice(navigate, reset);
 
   const onSubmit = (data) => {
-    const { invoice_type } = data;
+    if (!data.details || data.details.length === 0) {
+        toast.error('Please add at least one product item');
+        return;
+    }
+    const invoice_type = parseInt(data.invoice_type);
+    const type = parseInt(data.type);
+    const type_id = parseInt(data.type_id);
     let cleanedDetails = [];
-
     if (invoice_type === '3' || invoice_type === '4') {
         cleanedDetails = data.details.map(d => ({
-        product_id: d.product_id,
-        quantity: d.quantity
+        product_id: parseInt(d.product_id),
+        quantity: parseFloat(d.quantity)
         }));
     } else {
-        cleanedDetails = data.details;
+        cleanedDetails = data.details.map(d => ({
+            product_id: parseInt(d.product_id),
+            quantity: parseFloat(d.quantity),
+            gst_rate: parseFloat(d.gst_rate),
+            gst_type: parseInt(d.gst_type),
+            discount_amount: parseFloat(d.discount_amount),
+            damage_amount: parseFloat(d.damage_amount)
+        }));
     }
-
     const PAY_LOAD = {
         ...data,
+        invoice_type,
+        type,
+        type_id,
         details: cleanedDetails
     };
     createMutation.mutate(PAY_LOAD);
@@ -73,6 +93,7 @@ const InvoiceAdd = () => {
  const handleTypeChange = async (e) => {
     const selectedId = e.target.value;
     setValue('type_id', selectedId);
+    clearErrors('type_id');
     if (!selectedId) {
       setRunningBalance(0);
       return;
@@ -96,14 +117,15 @@ const InvoiceAdd = () => {
 const handleInvoiceTypeChange = (e) => {
     const type = e.target.value;
     setValue('type', type);
+    clearErrors('type');
     setValue('type_id', '');
     setRunningBalance(0);
-    clearErrors();
 };
 
 const handleInvoiceModeChange = (e) => {
     const selectedMode = e.target.value;
-    setValue('invoice_type', selectedMode);   
+    setValue('invoice_type', selectedMode); 
+    clearErrors('invoice_type');  
     clearErrors('reason');                   
     setValue('reason', '');                 
 };
@@ -222,7 +244,30 @@ const handleRedirect = () => {
                     </div>
                     <div className='form_group'>
                         <label>Area Name</label>
-                        <input type="text" placeholder='Area Name' {...register('area_name', { required: true })} className='form_control' />
+                        <Controller
+                            control={control}
+                            name="area_name"
+                            rules={{ required: true }}
+                            render={({ field }) => {
+                                const selectedOption = areas.find(area => area.id === field.value);
+                                return (
+                                <Select
+                                    {...field}
+                                    options={areas.map(area => ({ label: area.area_name, value: area.id }))}
+                                    placeholder="Select Area"
+                                    className="invoice_react_select"
+                                    isSearchable
+                                    value={selectedOption ? { label: selectedOption.area_name, value: selectedOption.id } : null}
+                                    onChange={(selected) => field.onChange(selected?.value)}
+                                    styles={{
+                                    control: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                    input: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                    option: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                    }}
+                                />
+                                );
+                            }}
+                        />
                         {errors.area_name && <p className='error'>Area Name is required</p>}
                     </div>
                     <div className='form_group'>
@@ -264,17 +309,35 @@ const handleRedirect = () => {
                     {fields.map((item, index) => (
                         <tr key={item.id}>
                         <td>
-                            <select {...register(`details.${index}.product_id`, { required: true })}>
-                            <option value="">Select Product</option>
-                            {products.map(prod => (
-                                <option key={prod.id} value={prod.id}>{prod.name}</option>
-                            ))}
-                            </select>
+                            <Controller
+                                control={control}
+                                name={`details.${index}.product_id`}
+                                rules={{ required: true }}
+                                render={({ field }) => {
+                                    const selectedOption = products.find(p => p.id === field.value);
+                                    return (
+                                    <Select
+                                        {...field}
+                                        options={products.map(prod => ({ label: prod.name, value: prod.id }))}
+                                        placeholder="Select Product"
+                                        isSearchable
+                                        className="invoice_react_select"
+                                        value={selectedOption ? { label: selectedOption.name, value: selectedOption.id } : null}
+                                        onChange={(selected) => field.onChange(selected?.value)}
+                                        styles={{
+                                        control: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                        input: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                        option: (base) => ({ ...base, fontFamily: '"Poppins", system-ui' }),
+                                        }}
+                                    />
+                                    );
+                                }}
+                            />
                         </td>
-                        <td>
+                        <td style={{ width:"100px"}}>
                             <input type="text" {...register(`details.${index}.quantity`, { required: true })} defaultValue={0} />
                         </td>
-                        <td>
+                        <td style={{ width:"100px"}}>
                             <input type="text" step="0.01" {...register(`details.${index}.gst_rate`)} defaultValue={0} />
                         </td>
                         <td>
@@ -284,13 +347,13 @@ const handleRedirect = () => {
                                 <option value={2}>Exclusive</option>
                             </select>
                         </td>
-                        <td>
+                        <td style={{ width:"100px"}}>
                             <input type="text" {...register(`details.${index}.discount_amount`)} defaultValue={0} />
                         </td>
-                        <td>
+                        <td style={{ width:"100px"}}>
                             <input type="text" {...register(`details.${index}.damage_amount`)} defaultValue={0} />
                         </td>
-                        <td>
+                        <td style={{ width:"100px"}}>
                             <button type="button" className='remove' onClick={() => remove(index)}><FaRegTrashAlt /></button>
                         </td>
                         </tr>
