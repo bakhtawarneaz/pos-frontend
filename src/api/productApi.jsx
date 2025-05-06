@@ -20,3 +20,8 @@ export const deleteProduct = async (data) => {
     const response = await api.post('/products/delete',data);
     return response.data;
 };
+
+export const productTracking = async (product_id) => {
+    const response = await api.post('/products/track-stock', product_id);
+    return response.data;
+};

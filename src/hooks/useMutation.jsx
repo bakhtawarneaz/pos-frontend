@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createProduct, updateProduct, deleteProduct } from '@api/productApi';
+import { createProduct, updateProduct, deleteProduct, productTracking } from '@api/productApi';
 import { createArea, updateArea, deleteArea } from '@api/areaApi';
 import { createBank, updateBank, deleteBank } from '@api/bankApi';
 import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
@@ -76,6 +76,24 @@ export const useUpdateProduct = (navigate, reset, handleResetUpload) => {
       },
     });
   };
+
+  export function useProductTracking(navigate, reset) {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: productTracking,
+      onSuccess: (data) => {
+        toast.success(data?.message || 'Product stock tracking fetched!');
+        reset();
+        handleResetUpload();
+        navigate('/dashboard/product'); 
+        queryClient.invalidateQueries({ queryKey: ['product'] });
+      },
+      onError: (error) => {
+        const errorMessage = error?.response?.data?.message || 'Failed to create product.';
+        toast.error(errorMessage);
+      },
+   });
+}
 
 
   /** Area **/

@@ -9,6 +9,7 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { GoShareAndroid } from "react-icons/go";
 import { BsBank } from "react-icons/bs";
 import { FaRegChartBar } from "react-icons/fa";
+import { FiFilter } from "react-icons/fi";
 
 /* helpers...*/
 import { getDynamicPath } from '@helper/PathHelper';
@@ -23,6 +24,11 @@ export const MenuItems = [
         title: 'Product',
         path: getDynamicPath('/product'),
         icon: <RiLuggageCartLine />,
+    },
+    {
+        title: 'Product Tracking',
+        path: getDynamicPath('/product-tracking'),
+        icon: <FiFilter />,
     },
     {
         title: 'Brand',
