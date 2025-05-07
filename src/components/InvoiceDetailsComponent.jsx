@@ -23,8 +23,8 @@ const InvoiceDetailsComponent = ({ invoice }) => {
         <h2>Invoice #{invoice.id}</h2>
         <div className="invoice_detail_top">
           <p><strong>Date:</strong> {invoice.date ? new Date(invoice.date).toLocaleDateString('en-GB') : '-'}</p>
-          <p><strong>Invoice Mode:</strong> {INVOICE_MODE_MAP[invoice.invoice_type] || '-'}</p>
-          <p><strong>Invoice Type:</strong> {INVOICE_TYPE_MAP[invoice.type] || '-'}</p>
+          <p><strong>Invoice Mode:</strong> {INVOICE_MODE_MAP[invoice.invoice_mode] || '-'}</p>
+          <p><strong>Invoice Type:</strong> {INVOICE_TYPE_MAP[invoice.invoice_type] || '-'}</p>
           <p><strong>Per Balance:</strong> {invoice.per_balance || '-'}</p>
           {invoice.bilty_no && (
             <p><strong>Bilty No:</strong> {invoice.bilty_no}</p>
