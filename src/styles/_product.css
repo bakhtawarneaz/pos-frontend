@@ -683,3 +683,109 @@ form .error {
     display: block;
     background: var(--primary-color);
 }
+
+
+/************** Product Tracking ****************/
+
+.product_tracking_header h2 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.product_tracking_header p {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(82, 82, 108, 0.8);
+}
+
+.product_tracking_form {
+    margin: 20px 0;
+}
+
+.product_tracking_form form {
+    display: flex;
+    align-items: center;
+}
+
+.product_tracking_form .form_group {
+    width: 50%;
+}
+
+.product_tracking_form .form_btn_cover {
+    width: 50%;
+}
+
+.product_tracking_form .form_group label {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.product_tracking_table table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #dbdade;
+}
+
+.product_tracking_table table thead {
+    background-color: #f4f4f580;
+}
+
+.product_tracking_table table thead th {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(82, 82, 108, 0.8);
+    padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+    text-transform: capitalize;
+}
+
+.product_tracking_summary {
+    margin-top: 20px;
+}
+
+.product_tracking_summary h2 {
+    font-family: var(--family);
+    font-weight: 500;
+    font-size: 25px;
+    text-transform: capitalize;
+    color: #000;
+}
+
+.product_tracking_summary .summary_wrap {
+    border: 1px solid #000;
+    width: 30%;
+}
+
+.product_tracking_summary .summary_wrap .summary_item {
+    border-bottom: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+}
+
+.product_tracking_summary .summary_wrap .summary_item:last-child {
+    border: 0;
+}
+
+.product_tracking_summary .summary_wrap .summary_item span {
+    font-family: var(--family);
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.product_tracking_summary .summary_wrap .summary_item p {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+}

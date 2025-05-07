@@ -378,14 +378,14 @@ const handleRedirect = () => {
                 </button>
             </div>
             <div className='form_btn_cover'>
-            <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
-            <button type="submit" className='btn' disabled={createMutation.isPending}>
-                { createMutation.isPending ? (
-                <ButtonLoader />
-                ) : (
-                 'Create Invoice'
-                )}
-            </button>
+                <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
+                <button type="submit" className='btn' disabled={createMutation.isPending}>
+                    { createMutation.isPending ? (
+                    <ButtonLoader />
+                    ) : (
+                    'Create Invoice'
+                    )}
+                </button>
             </div>
         </div>
 

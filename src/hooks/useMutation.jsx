@@ -77,19 +77,15 @@ export const useUpdateProduct = (navigate, reset, handleResetUpload) => {
     });
   };
 
-  export function useProductTracking(navigate, reset) {
-    const queryClient = useQueryClient();
+  export function useProductTracking(reset) {
     return useMutation({
       mutationFn: productTracking,
       onSuccess: (data) => {
         toast.success(data?.message || 'Product stock tracking fetched!');
         reset();
-        handleResetUpload();
-        navigate('/dashboard/product'); 
-        queryClient.invalidateQueries({ queryKey: ['product'] });
       },
       onError: (error) => {
-        const errorMessage = error?.response?.data?.message || 'Failed to create product.';
+        const errorMessage = error?.response?.data?.message || 'Failed to fetched product tracking.';
         toast.error(errorMessage);
       },
    });
