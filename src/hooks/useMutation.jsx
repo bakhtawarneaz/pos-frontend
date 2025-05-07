@@ -77,12 +77,13 @@ export const useUpdateProduct = (navigate, reset, handleResetUpload) => {
     });
   };
 
-  export function useProductTracking(reset) {
+  export function useProductTracking(reset,onSuccessCallback) {
     return useMutation({
       mutationFn: productTracking,
       onSuccess: (data) => {
         toast.success(data?.message || 'Product stock tracking fetched!');
         reset();
+        if (onSuccessCallback) onSuccessCallback(data);
       },
       onError: (error) => {
         const errorMessage = error?.response?.data?.message || 'Failed to fetched product tracking.';

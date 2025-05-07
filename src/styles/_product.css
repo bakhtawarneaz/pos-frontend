@@ -702,6 +702,18 @@ form .error {
     color: rgba(82, 82, 108, 0.8);
 }
 
+.selected_product_info {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.selected_product_info p {
+    font-size: 14px;
+    color: #000;
+}
+
 .product_tracking_form {
     margin: 20px 0;
 }
@@ -743,6 +755,16 @@ form .error {
     font-size: 14px;
     color: rgba(82, 82, 108, 0.8);
     padding: 10px 10px;
+    text-align: left;
+    min-width: 100px;
+    text-transform: capitalize;
+}
+
+.product_tracking_table table tbody td {
+    padding: 10px 10px;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
     text-align: left;
     min-width: 100px;
     text-transform: capitalize;

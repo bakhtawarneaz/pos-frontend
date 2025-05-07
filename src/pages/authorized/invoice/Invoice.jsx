@@ -10,6 +10,7 @@ import InvoiceDetailsComponent from '@components/InvoiceDetailsComponent';
 import { FiPlus } from "react-icons/fi";
 import { LuRefreshCw } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
+import { BsFileEarmarkPdf } from "react-icons/bs";
 
 /* styles...*/
 import '@styles/_product.css'
@@ -148,7 +149,29 @@ const Invoice = () => {
     };
     
     const columns = [
-      { key: "id", label: "ID" },
+      { 
+        key: "id", 
+        label: "ID" 
+      },
+      {
+        key: "pdf_url",
+        label: "File",
+        render: (row) =>
+          row.pdf_url ? (
+            <a
+              href={row.pdf_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              style={{ color: "#d32f2f" }}
+              title="Invoice PDF"
+            >
+              <BsFileEarmarkPdf size={25} />
+            </a>
+          ) : (
+            "-"
+          ),
+      },
       { 
         key: "invoice_type", 
         label: "Invoice Mode",

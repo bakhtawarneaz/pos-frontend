@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 /* packages...*/
 import { useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { Controller } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 /* hooks... */
 import { useProductTracking } from '@hooks/useMutation';
@@ -18,32 +18,50 @@ import TableBlank from '@components/TableBlank';
 
 const ProductTracking = () => {
 
-  const { control, handleSubmit, reset  } = useForm();
-  const queryClient = useQueryClient();
+  const { control, handleSubmit, reset, getValues  } = useForm();
+  const [trackingData, setTrackingData] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   /* Queries */
   const { data: productData } = useFetchProduct({ page: 1, perPage: 'all' });
   const products = productData?.data?.data || [];
 
   /* Mutations */
-  const trackMutation = useProductTracking(reset);
+  const trackMutation = useProductTracking(
+    reset,
+    (data) => {
+      setTrackingData(data.data);
+      const product = products.find(p => p.id === data.data.product_id);
+      setSelectedProduct(product || null);
+    }
+  );
     
-  const onSubmit = (data) => {
-    trackMutation.mutate(data);
+  const onSubmit = () => {
+    const values = getValues();
+    if (!values.product_id) {
+      toast.error('Please select product name');
+      return;
+    }
+    trackMutation.mutate({ product_id: values.product_id });
   };
 
   const handleClear = () => {
     reset();
-    queryClient.removeQueries(['productTracking']);
+    setTrackingData(null);
+    setSelectedProduct(null);
   };
-
-  const trackingData = queryClient.getQueryData(['productTracking'])?.data;
 
   return (
     <div className='product_tracking_wrap'> 
        <div className='product_tracking_header'>
           <h2>Product Tracking</h2>
           <p>Track your product by selecting the product name.</p>
+          {selectedProduct && (
+            <div className='selected_product_info'>
+              <p><strong>Product Name:</strong> {selectedProduct.name} </p>
+              <p><strong>Product ID:</strong> {selectedProduct.id}</p>
+            </div>
+          )}
        </div> 
        <div className='product_tracking_form'>
           <form onSubmit={handleSubmit(onSubmit)}> 
@@ -52,7 +70,6 @@ const ProductTracking = () => {
               <Controller
                   control={control}
                   name="product_id"
-                  rules={{ required: true }}
                   render={({ field }) => {
                       const selectedOption = products.find(p => p.id === field.value);
                       return (
@@ -97,10 +114,10 @@ const ProductTracking = () => {
             </thead>
             <tbody>
               {trackingData?.tracking?.length > 0 ? (
-                trackingData.tracking.map((record) => (
+                 trackingData.tracking.map((record) => (
                   <tr key={record.invoice_id}>
                     <td>{record.invoice_id}</td>
-                    <td>{new Date(record.date).toLocaleString()}</td>
+                    <td>{new Date(record.date).toLocaleDateString('en-GB')}</td>
                     <td>{record.rate}</td>
                     <td>{record.purchased_qty}</td>
                     <td>{record.used_qty}</td>
@@ -127,11 +144,11 @@ const ProductTracking = () => {
             </div>
             <div className='summary_item'>
               <span>Total Used</span>
-              <p>{trackingData?.total_purchased || 0}</p>
+              <p>{trackingData?.total_used || 0}</p>
             </div>
             <div className='summary_item'>
               <span>Total Returned</span>
-              <p>{trackingData?.total_purchased || 0}</p>
+              <p>{trackingData?.total_returned_qty || 0}</p>
             </div>
             <div className='summary_item'>
               <span>Total Remaining</span>
