@@ -15,6 +15,102 @@
     color: rgba(82, 82, 108, 0.8);
 }
 
+.home_wrap .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home_wrap form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.home_wrap form .rmdp-input {
+    padding: 5px 35px 5px 15px;
+    outline: none;
+    border: 1px solid var(--primary-color);
+    font-size: 14px;
+    font-family: var(--family);
+    font-weight: 400;
+    text-transform: capitalize;
+    border-radius: 3px;
+    height: auto;
+    width: 100%;
+    margin: 0;
+}
+
+
+.home_wrap form .btn_group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.home_wrap form .btn_group button {
+    width: 100%;
+    padding: 5px 15px;
+    border: 0;
+    background: var(--primary-color);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 14px;
+    font-family: var(--family);
+    font-weight: 400;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: 0.5s all;
+}
+
+.home_wrap form .btn_group button[disabled] {
+    background: var(--primary-color);
+    opacity: 0.5;
+    transition: 0.5s all;
+    cursor: not-allowed;
+}
+
+
+.top_box .box .loader_button {
+    justify-content: flex-start;
+}
+
+.top_box .box .spinner > div {
+    background: var(--primary-color);
+}
+
+
+.custom_date_picker .rmdp-header {
+    font-family: var(--family);
+    font-weight: 400;
+}
+
+.custom_date_picker .rmdp-header button i {
+    border: solid var(--primary-color);
+    border-width: 0 2px 2px 0;
+}
+
+.custom_date_picker .rmdp-day-picker {
+    font-family: var(--family);
+    font-weight: 400;
+}
+
+.custom_date_picker .rmdp-day-picker .rmdp-week-day {
+    color: var(--primary-color);
+}
+.custom_date_picker .rmdp-day-picker .rmdp-week .rmdp-today span {
+    background-color: #8884d8;
+}
+
+.custom_date_picker .rmdp-day-picker .rmdp-week .rmdp-range {
+    background-color: #8884d8;
+    border-radius: 50px;
+}
+
+.custom_date_picker .rmdp-day-picker .rmdp-week .rmdp-day span:hover {
+    background: #8884d8;
+}
+
 /*************** Dashboard Top Bar Boxes *********************/ 
 
 .top_box {
@@ -48,7 +144,7 @@
     text-transform: capitalize;
 }
 
-.top_box .box p {
+.top_box .box .value {
     font-family: var(--family);
     font-weight: 500;
     font-size: 20px;
@@ -137,7 +233,6 @@
     flex: 1;
     padding: 15px;
     border-radius: 5px;
-    width: 50%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 

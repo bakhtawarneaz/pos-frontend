@@ -25,6 +25,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 
 
+
+
 const Product = () => {
 
   /* State */
@@ -79,7 +81,7 @@ const Product = () => {
     }
   };
 
-  const handleRedirect = (row) => {
+  const handleRedirect = () => {
     navigate('/dashboard/product/product-add');
   };
 

@@ -8,22 +8,45 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { format, parseISO } from "date-fns";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-const SalesAndPurchases = () => {
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+const SalesAndPurchases = ({ data = [], isLoading }) => {
+
+  if (isLoading || !Array.isArray(data)) return <div className="skeleton-loader"></div>;
+  
+  const grouped = {};
+
+  data.forEach((item) => {
+    const monthLabel = format(parseISO(item.month), "MMM yyyy");
+    if (!grouped[monthLabel]) {
+      grouped[monthLabel] = { sales: 0, purchases: 0 };
+    }
+
+    if (item.invoice_mode === 1) {
+      grouped[monthLabel].purchases = Number(item.total);
+    } else if (item.invoice_mode === 2) {
+      grouped[monthLabel].sales = Number(item.total);
+    }
+  });
+
+  const labels = Object.keys(grouped);
+  const purchases = labels.map(label => grouped[label].purchases);
+  const sales = labels.map(label => grouped[label].sales);
+
+  const chartData = {
+    labels,
     datasets: [
       {
-        label: 'Sales',
-        data: [4000, 3000, 2000, 2780, 1890],
-        backgroundColor: '#8884d8',
+        label: 'Purchases',
+        data: purchases,
+        backgroundColor: '#f43f5e',
       },
       {
-        label: 'Purchases',
-        data: [2400, 1398, 9800, 3908, 4800],
-        backgroundColor: '#f43f5e',
+        label: 'Sales',
+        data: sales,
+        backgroundColor: '#8884d8',
       },
     ],
   };
@@ -38,7 +61,7 @@ const SalesAndPurchases = () => {
 
   return (
     <>
-      <Bar data={data} options={options} />
+      <Bar data={chartData} options={options} />
     </>
   );
 };
