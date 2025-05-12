@@ -252,6 +252,7 @@
 .dashboard_table_wrap table {
     width: 100%;
     border-collapse: collapse;
+    border: 1px solid #e5e7eb;
 }
 
 .dashboard_table_wrap table thead {
@@ -268,6 +269,28 @@
     text-align: left;
     min-width: 100px;
 }
+
+.dashboard_table_wrap table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard_table_wrap table tbody tr td {
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #000;
+    padding: 5px 10px;
+    text-align: left;
+    min-width: 100px;
+}
+
+.dashboard_table_wrap table tbody tr td img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+}
+
 
 
 /*************** Table Blank *********************/ 

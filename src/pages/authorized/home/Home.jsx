@@ -23,6 +23,9 @@ import { useMutation } from '@tanstack/react-query';
 /* packages...*/
 import DatePicker from "react-multi-date-picker";
 
+/* assets...*/
+import usericon from '@assets/user.png'
+
 
 const Home = () => {
 
@@ -114,19 +117,30 @@ const Home = () => {
 
 const productColumns = [
     { key: "id", label: "ID" },
-    { key: "company", label: "Image" },
-    { key: "company", label: "Code" },
-    { key: "number", label: "Name" },
-    { key: "email", label: "Qty" },
+    {
+      key: "product_img",
+      label: "Image",
+      render: (row) => <img 
+        src={row.product_img || usericon } 
+        alt={row.name} 
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = usericon;
+        }} 
+      />,
+    },
+    { key: "code", label: "Code" },
+    { key: "name", label: "Name" },
+    { key: "qty", label: "Qty" },
 ];
 
 {/*  Invoices Columns */}
 
 const invoiceColumns = [
     { key: "id", label: "ID" },
-    { key: "company", label: "Invoice Mode" },
-    { key: "company", label: "Invoice Type" },
-    { key: "number", label: "Amount" },
+    { key: "invoice_mode", label: "Invoice Mode" },
+    { key: "invoice_type", label: "Invoice Type" },
+    { key: "total", label: "Amount" },
 ];
 
 const isSearchDisabled = dateRange.length < 2;
