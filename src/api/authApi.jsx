@@ -21,3 +21,43 @@ export const login = async (credentials) => {
     throw error;
   }
 };
+
+
+export const sendOtp = async (email) => {
+  try {
+    const response = await api.post('/auth/send-otp', email);
+    toast.success(response?.data?.message || 'Otp sent successfully!');
+    return response;
+
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Something went wrong';
+    toast.error(errorMessage);
+    throw error;
+  }
+};
+
+export const verifyOtp = async (otp) => {
+  try {
+    const response = await api.post('/auth/verify-otp', otp);
+    toast.success(response?.data?.message || 'Otp verified successfully!');
+    return response;
+
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Something went wrong';
+    toast.error(errorMessage);
+    throw error;
+  }
+};
+
+export const resetPassword = async (data) => {
+  try {
+    const response = await api.post('/auth/reset-password', data);
+    toast.success(response?.data?.message || 'password reset successfully!');
+    return response;
+
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'Something went wrong';
+    toast.error(errorMessage);
+    throw error;
+  }
+};

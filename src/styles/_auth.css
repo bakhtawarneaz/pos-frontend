@@ -303,3 +303,24 @@
     right: 10px;
   }
   
+  .otp-input-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .otp-box {
+    width: 40px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border 0.2s ease-in-out;
+  }
+  
+  .auth_form_body form .otp-box:focus {
+    border-color: #e50914;
+  }

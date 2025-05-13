@@ -6,7 +6,7 @@ import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
-import { login } from  '@api/authApi';
+import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
 
@@ -22,6 +22,45 @@ export function useLogin(navigate, setLoading) {
             setLoading(false);
         },
     });
+}
+
+export function useSendOtp(navigate, setLoading) {
+  return useMutation({
+      mutationFn: sendOtp,
+      onSuccess: () => {
+         setLoading(false);
+         navigate('/auth/otp'); 
+      },
+      onError: () => {
+        setLoading(false)
+      },
+  });
+}
+
+export function useVerifyOtp(navigate, setLoading) {
+  return useMutation({
+      mutationFn: verifyOtp,
+      onSuccess: () => {
+         setLoading(false);
+         navigate('/auth/reset-password'); 
+      },
+      onError: () => {
+        setLoading(false)
+      },
+  });
+}
+
+export function useResetPassword(navigate, setLoading) {
+  return useMutation({
+      mutationFn: resetPassword,
+      onSuccess: () => {
+         setLoading(false);
+         navigate('/auth/login'); 
+      },
+      onError: () => {
+        setLoading(false)
+      },
+  });
 }
 
 /** Product **/

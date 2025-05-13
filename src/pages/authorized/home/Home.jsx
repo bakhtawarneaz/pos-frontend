@@ -91,8 +91,8 @@ const Home = () => {
     setData(initialData);
     const [startDate, endDate] = dateRange;
     const PAY_LOAD = {
-      startDate: startDate ? new Date(startDate).toISOString().split('T')[0] : null,
-      endDate: endDate ? new Date(endDate).toISOString().split('T')[0] : null,
+      start_date: startDate ? new Date(startDate).toISOString().split('T')[0] : null,
+      end_date: endDate ? new Date(endDate).toISOString().split('T')[0] : null,
     };
     mutation.mutate(PAY_LOAD);
   };

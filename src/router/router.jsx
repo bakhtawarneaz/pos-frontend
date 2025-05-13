@@ -6,6 +6,9 @@ import useUserStore from '@/stores/useUserStore';
 /************* Un Authorized *************/
 
 import Login from  '@unAuthPages/login/Login';
+import Forgot from  '@unAuthPages/forgot/Forgot';
+import Otp from  '@unAuthPages/otp/Otp';
+import ResetPassword from  '@unAuthPages/reset/ResetPassword';
 import DashboardLayout from  '@layouts/dashboardLayout/DashboardLayout';
 import AuthLayout from  '@layouts/authLayout/AuthLayout';
 
@@ -56,7 +59,10 @@ const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
             { path: '', element: <Navigate to="login" /> },
-            { path: 'login',element: <Login /> }
+            { path: 'login',element: <Login /> },
+            { path: 'forgot',element: <Forgot /> },
+            { path: 'otp',element: <Otp /> },
+            { path: 'reset-password',element: <ResetPassword /> }
         ],
         errorElement: <NotFound />,
     },
@@ -67,12 +73,6 @@ const router = createBrowserRouter([
             { path: '', element: <Navigate to="home" /> },
             { path: 'home', element: <ProtectedRoute element={<Home />} allowedRoles={[1, 2]} /> }, 
             { path: 'area', element: <ProtectedRoute element={<Area />} allowedRoles={[1]} /> }, 
-            // { path: 'brand', element: <ProtectedRoute element={<Brand />} allowedRoles={[1]} /> }, 
-            // { path: 'employee', element: <ProtectedRoute element={<Employee />} allowedRoles={[1]} /> },
-            // { path: 'product', element: <ProtectedRoute element={<Product />} allowedRoles={[1]} /> },
-            // { path: 'bank', element: <ProtectedRoute element={<Bank />} allowedRoles={[1]} /> }, 
-            //{ path: 'customer', element: <ProtectedRoute element={<Customer />} allowedRoles={[1]} /> },
-            // { path: 'invoice', element: <ProtectedRoute element={<Invoice />} allowedRoles={[1, 2]} /> },
             {
                 path: 'brand',
                 children: [

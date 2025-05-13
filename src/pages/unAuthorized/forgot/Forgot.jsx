@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 /* assets...*/
 import Logo from  '@assets/logo.png';
 
@@ -10,53 +9,41 @@ import LoginSlider from '@components/LoginSlider';
 /* styles...*/
 import '@styles/_auth.css';
 
-/* icons...*/
-import { FaEye } from "react-icons/fa6";
-import { FaEyeSlash } from "react-icons/fa6";
-
 /* packages...*/
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 
 /* hooks...*/
-import { useLogin } from '@hooks/useMutation';
+import { useSendOtp } from '@hooks/useMutation';
 
-const Login = () => {
+const Forgot = () => {
 
     /* UseState Here...*/
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
     const [isLoading,setLoading] =useState(false);
 
     /* Hooks...*/
     const navigate = useNavigate();
 
     /* Mutations...*/
-    const mutation = useLogin(navigate, setLoading);
+    const mutation = useSendOtp(navigate, setLoading);
 
     /* Functions Here...*/
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
-        const trimmedUsername = username.trim();
-        const trimmedPassword = password.trim();
-        if (!trimmedUsername || !trimmedPassword) {
-            toast.error('All fields are required');
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail) {
+            toast.error('Email is required');
             setLoading(false);
             return;
         }
         const PAY_LOAD = { 
-          username: trimmedUsername, 
-          password: trimmedPassword
+            email: trimmedEmail, 
         };
         mutation.mutate(PAY_LOAD);
     };
   
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
-
   return (
     <div className='auth_body'>
       <div className='auth_wraper'>
@@ -67,40 +54,21 @@ const Login = () => {
             </div>
             <div className='auth_form_body'>
                 <div className='heading'>
-                    <h1>Login to your Account 👋</h1>
-                    <p>Welcome Back to <span>Inventory Pro</span></p>
+                    <h1>Forgot Password?</h1>
+                    <p>No worries, we'll send you reset instructions</p>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Username</label>
+                        <label htmlFor="email">Email</label>
                         <div className="input-wrap">
                         <input
                             id="email"
-                            placeholder="Enter your Username"
+                            placeholder="Enter your Email"
                             type="text"
                             className="input-elm"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <div className='passLbl_forgotBtn'>
-                            <label htmlFor="password">Password</label>
-                            <Link to={'/auth/forgot'}>Forgot password ?</Link>
-                        </div>
-                        <div className="input-wrap">
-                        <input
-                            id="password"
-                            placeholder="**********"
-                            type={showPassword ? "text" : "password"}
-                            className="input-elm"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <div className="eye-btn" onClick={togglePasswordVisibility}>
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
-                        </div>
                         </div>
                     </div>
                     <div className="auth-form-btn">
@@ -108,14 +76,14 @@ const Login = () => {
                         {isLoading ? (
                             <ButtonLoader />
                         ) : (
-                            "Login"
+                            "Send Email"
                         )}
                         </button>
                     </div>
                 </form>
                 <p className="platform">
-                    <span>Not a Registered ?</span>
-                    <Link to={''}>Create account</Link>
+                    <span>Remember password ?</span>
+                    <Link to={'/auth/login'}>login</Link>
                 </p>
             </div>
          </div>
@@ -127,4 +95,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Forgot
