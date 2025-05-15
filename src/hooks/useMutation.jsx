@@ -7,6 +7,7 @@ import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
 import { createUser, deleteUser } from '@api/userApi';
+import { createRole } from '@api/roleApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -478,3 +479,23 @@ export const useDeleteUser = () => {
     },
   });
 };
+
+
+/** Role **/
+
+export function useCreateRole(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createRole,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Role created!');
+      reset();
+      navigate('/dashboard/role'); 
+      queryClient.invalidateQueries({ queryKey: ['role'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create role.';
+      toast.error(errorMessage);
+    },
+ });
+}
