@@ -6,6 +6,7 @@ import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
+import { createUser, deleteUser } from '@api/userApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -438,6 +439,41 @@ export const useDeleteInvoice = (closeDeleteModal) => {
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted invoice.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+/** User **/
+
+export function useCreateUser(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createUser,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'User created!');
+      reset();
+      navigate('/dashboard/user'); 
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create user.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['user']);
+      toast.success(data?.message || 'User deleted successfully!');
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted user.';
       toast.error(errorMessage);
     },
   });

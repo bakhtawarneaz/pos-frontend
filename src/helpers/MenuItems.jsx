@@ -10,6 +10,7 @@ import { GoShareAndroid } from "react-icons/go";
 import { BsBank } from "react-icons/bs";
 import { FaRegChartBar } from "react-icons/fa";
 import { FiFilter } from "react-icons/fi";
+import { FaUser } from "react-icons/fa6";
 
 /* helpers...*/
 import { getDynamicPath } from '@helper/PathHelper';
@@ -50,11 +51,11 @@ export const MenuItems = [
         path: getDynamicPath('/invoice'),
         icon: <LiaFileInvoiceDollarSolid />,
     },
-    {
-        title: 'Report',
-        path: getDynamicPath('/report'),
-        icon: <FaRegChartBar />,
-    },
+    // {
+    //     title: 'Report',
+    //     path: getDynamicPath('/report'),
+    //     icon: <FaRegChartBar />,
+    // },
     {
         title: 'Voucher',
         path: getDynamicPath('/voucher'),
@@ -69,5 +70,10 @@ export const MenuItems = [
         title: 'Bank',
         path: getDynamicPath('/bank'),
         icon: <BsBank />,
+    },
+    {
+        title: 'User',
+        path: getDynamicPath('/user'),
+        icon: <FaUser />,
     },
   ];

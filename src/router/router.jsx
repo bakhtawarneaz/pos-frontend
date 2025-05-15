@@ -24,6 +24,7 @@ import Customer from '@authPages/customer/Customer';
 import Invoice from '@authPages/invoice/Invoice';
 import Voucher from '@authPages/voucher/Voucher';
 import Report from '@authPages/report/Report';
+import User from '@authPages/user/User';
 
 import ProductAdd from '@authPages/product/ProductAdd';
 import ProductTracking from '@authPages/product/ProductTracking';
@@ -32,6 +33,7 @@ import EmployeeAdd from '@authPages/employee/EmployeeAdd';
 import BrandAdd from '@authPages/brand/BrandAdd';
 import CustomerAdd from '@authPages/customer/CustomerAdd';
 import InvoiceAdd from '@authPages/invoice/InvoiceAdd';
+import UserAdd from '@authPages/user/UserAdd';
 
 /************* Not Found Links *************/
 import NotFound from '@components/NotFound';
@@ -113,6 +115,13 @@ const router = createBrowserRouter([
                 children: [
                   { path: '', element: <ProtectedRoute element={<Invoice />} allowedRoles={[1, 2]} /> },
                   { path: 'invoice-add', element: <ProtectedRoute element={<InvoiceAdd />} allowedRoles={[1, 2]} /> },
+                ],
+            },
+            {
+                path: 'user',
+                children: [
+                  { path: '', element: <ProtectedRoute element={<User />} allowedRoles={[1, 2]} /> },
+                  { path: 'user-add', element: <ProtectedRoute element={<UserAdd />} allowedRoles={[1, 2]} /> },
                 ],
             },
             { path: 'voucher', element: <ProtectedRoute element={<Voucher />} allowedRoles={[1, 2]} /> },

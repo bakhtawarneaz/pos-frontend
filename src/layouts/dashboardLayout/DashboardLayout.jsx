@@ -76,10 +76,10 @@ const DashboardLayout = () => {
           </ul>
         </div>
         <div className='side_profile'>
-          <img src={usericon} alt="User" className="avatar" />
+          <img src={user?.profile_image || usericon} alt="User" className="avatar" />
           <div className="content">
-            <div className="name">muhammad bakhtawar niaz</div>
-            <div className="logout">logout</div>
+            <div className="name">{user?.full_name}</div>
+            <div className="logout" onClick={handleLogout}>logout</div>
           </div>
         </div>
       </aside>
@@ -101,10 +101,10 @@ const DashboardLayout = () => {
           <div className="header-right">
             <div className='profile_cover'>
               <div className="user-info" onClick={toggleDropdown}>
-                <img src={usericon} alt="User" className="avatar" />
+                <img src={user?.profile_image || usericon} alt="User" className="avatar" />
                 <div className="user-text">
-                  <div className="name">Muhammad Bakhtawar Niaz</div>
-                  <div className="email">bakhtawarneaz@gmail.com</div>
+                  <div className="name">{user?.full_name}</div>
+                  <div className="email">{user?.email}</div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevrons-up-down ml-auto h-4 w-4 shrink-0 opacity-50"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
               </div>

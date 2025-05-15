@@ -6,6 +6,8 @@ import { getCustomer } from '@api/customerApi';
 import { getEmployee } from '@api/employeeApi';
 import { getBank } from '@api/bankApi';
 import { getInvoice } from '@api/invoiceApi';
+import { getUser } from '@api/userApi';
+import { getRole } from '@api/roleApi';
 
 /** Organization **/
 export function useFetchProduct({ page, perPage }) {
@@ -67,6 +69,24 @@ export function useFetchInvoice(filters) {
     return useQuery({
         queryKey: ['invoice', filters],
         queryFn: () => getInvoice(filters),
+        staleTime: 60 * 60 * 1000,
+    });
+}
+
+/** User **/
+export function useFetchUser(filters) {
+    return useQuery({
+        queryKey: ['user', filters],
+        queryFn: () => getUser(filters),
+        staleTime: 60 * 60 * 1000,
+    });
+}
+
+/** Role **/
+export function useFetchRole() {
+    return useQuery({
+        queryKey: ['role'],
+        queryFn: () => getRole(),
         staleTime: 60 * 60 * 1000,
     });
 }
