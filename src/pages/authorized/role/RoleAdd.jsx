@@ -40,6 +40,11 @@ const RoleAdd = () => {
             <input type="text" placeholder='Name' {...register('name', { required: true })} className='form_control' />
             {errors.name && <p className='error'>Name is required</p>}
           </div>
+          <div className='form_group'>
+            <label>Description</label>
+            <input type="text" placeholder='Description' {...register('description', { required: true })} className='form_control' />
+            {errors.description && <p className='error'>Description is required</p>}
+          </div>
         </div>
 
         <div className='form_btn_cover'>
