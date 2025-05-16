@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 
 /* packages...*/
 import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
 
 /* hooks... */
 import { useCreateUser, useUpdateUser } from '@hooks/useMutation';
@@ -14,15 +15,19 @@ import { uploadFile } from '@api/uploadApi';
 
 /* icons...*/
 import { FaRegTrashAlt } from "react-icons/fa";
-import { IoCloudUploadOutline } from "react-icons/io5";
-import { BsFileEarmarkPdf } from "react-icons/bs";
 
 /* components...*/
 import ButtonLoader from '@components/ButtonLoader';
 
 const UserAdd = () => {
 
-    const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset, control } = useForm(
+      {
+        defaultValues: {
+            primary_color: "#f43f5e"
+        }
+      }
+    );
 
     /* Hooks...*/
     const location = useLocation();
@@ -52,11 +57,15 @@ const UserAdd = () => {
       setValue('email', user.email);
       setValue('full_name', user.full_name);
       setValue('number', user.number);
-      setValue('dob', user.dob);
-      setValue('product_img', user.product_img);
+      if (user.dob) {
+        const [day, month, year] = user.dob.split('-');
+        const formattedDob = `${year}-${month}-${day}`;
+        setValue('dob', formattedDob);
+      }
+      setValue('profile_image', user.profile_image);
       setValue('primary_color', user.primary_color);
       setValue('role_id', user.role_id);
-      setUploadedImage(user.fileUrl);
+      setUploadedImage(user.profile_image);
     }
   }, [isEdit, user, setValue]);
 
@@ -203,6 +212,22 @@ const UserAdd = () => {
           </div>
 
           <div className='form_group'>
+            <label>Color</label>
+              <Controller
+                name="primary_color"
+                control={control}
+                rules={{ validate: matchIsValidColor }}
+                render={({ field }) => (
+                  <MuiColorInput
+                    {...field}
+                    format="hex"
+                  />
+                )}
+              />
+            {errors.primary_color && <p className='error'>color is required</p>} 
+          </div>
+
+          <div className='form_group'>
             <label>Role Name</label>
             <select {...register('role_id', { required: true })} className='form_control'>
               <option value="">Select Role</option>
@@ -219,11 +244,11 @@ const UserAdd = () => {
 
         <div className='form_btn_cover'>
           <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
-          <button type="submit" className='btn' disabled={createMutation.isPending}>
-            {createMutation.isPending ? (
+          <button type="submit" className='btn' disabled={isEdit ? updateMutation.isPending : createMutation.isPending}>
+            {(isEdit ? updateMutation.isPending : createMutation.isPending) ? (
               <ButtonLoader />
             ) : (
-              'Create'
+              isEdit ? 'Update' : 'Create'
             )}
           </button>
         </div>

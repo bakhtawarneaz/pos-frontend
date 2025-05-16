@@ -70,6 +70,10 @@ const User = () => {
     }
   };
 
+  const handleEdit = (row) => {
+    navigate('/dashboard/user/user-add', { state: { user: row, isEdit: true } });
+  };
+
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -152,7 +156,7 @@ const User = () => {
               perPage={meta.perPage || 10}
               totalRecords={meta.total || 0}
               onPageChange={handlePageChange}
-              showAction={false}
+              onEdit={handleEdit}
               isLoading={isUserLoading}
             />
         </div>
