@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 /* packages...*/
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /* hooks... */
-import { useCreateUser } from '@hooks/useMutation';
+import { useCreateUser, useUpdateUser } from '@hooks/useMutation';
 import { useFetchRole } from '@hooks/useQuery';
 
 /* api...*/
@@ -14,6 +14,8 @@ import { uploadFile } from '@api/uploadApi';
 
 /* icons...*/
 import { FaRegTrashAlt } from "react-icons/fa";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { BsFileEarmarkPdf } from "react-icons/bs";
 
 /* components...*/
 import ButtonLoader from '@components/ButtonLoader';
@@ -23,6 +25,7 @@ const UserAdd = () => {
     const { register, handleSubmit, formState: { errors }, setValue, clearErrors, reset } = useForm();
 
     /* Hooks...*/
+    const location = useLocation();
     const navigate = useNavigate();
     const fileInputRef = useRef(null); 
     
@@ -31,84 +34,104 @@ const UserAdd = () => {
     const [isUploading, setIsUploading] = useState(false); 
     const [uploadedImage, setUploadedImage] = useState(''); 
     const [progress, setProgress] = useState(0);
+    const { user, isEdit } = location.state || {};
     
     /* Mutations */
     const createMutation = useCreateUser(navigate, reset, handleResetUpload);
+    const updateMutation = useUpdateUser(navigate, reset, handleResetUpload);
     
     /* Queries */
-    const { data: roleData } = useFetchRole();
-    const role = roleData?.data || [];
+    const { data: roleData } = useFetchRole({ page: 1, perPage: 'all' });
+    const role = roleData?.data?.data || [];
     
     
+      /* Effects */
+  useEffect(() => {
+    if (isEdit && user) {
+      setValue('name', user.name);
+      setValue('code', user.code);
+      setValue('address', user.address);
+      setValue('party_type', user.party_type);
+      setValue('contact_no', user.contact_no);
+      setValue('proprietor', user.proprietor);
+      setValue('area_id', user.area_id);
+      setValue('running_balance', user.running_balance);
+      setUploadedImage(user.fileUrl);
+    }
+  }, [isEdit, user, setValue]);
 
-      /* Functions Here...*/
-      const onSubmit = (data) => {
-        const PAY_LOAD = {
-            ...data,
-            active: true,
-        };
-        createMutation.mutate(PAY_LOAD);
+    /* Functions Here...*/
+    const onSubmit = (data) => {
+      if (isEdit  && user) {
+           const PAY_LOAD = {
+             ...data,
+             id: user.id,
+         };
+         updateMutation.mutate(PAY_LOAD);
+       } else {
+         createMutation.mutate(data);
+       }
+   };
+
+    function handleResetUpload() {
+      setUploadedImage('');  
+      setProgress(0);        
+      setIsUploading(false); 
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      setValue('profile_image', '');
+    };
+  
+    const handleFileChange = async (e) => {
+      setIsUploading(true);
+      setProgress(0);
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      const simulateProgress = () => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + 10; 
+        });
       };
-    
-      function handleResetUpload() {
-        setUploadedImage('');  
-        setProgress(0);        
-        setIsUploading(false); 
-        if (fileInputRef.current) fileInputRef.current.value = '';
-        setValue('profile_image', '');
-      };
-    
-      const handleFileChange = async (e) => {
-        setIsUploading(true);
+  
+      const progressInterval = setInterval(simulateProgress, 100);
+  
+      try {
+        const response = await uploadFile(formData); 
+        clearInterval(progressInterval);
+        setProgress(100);
+        setUploadedImage(response.data.filePath); 
+        setValue('profile_image', response.data.filePath);
+        toast.success('File uploaded successfully!');
+        clearErrors('profile_image');
+      } catch (error) {
+        clearInterval(progressInterval);
         setProgress(0);
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-    
-        const simulateProgress = () => {
-          setProgress((prev) => {
-            if (prev >= 100) {
-              clearInterval(progressInterval);
-              return 100;
-            }
-            return prev + 10; 
-          });
-        };
-    
-        const progressInterval = setInterval(simulateProgress, 100);
-    
-        try {
-          const response = await uploadFile(formData); 
-          clearInterval(progressInterval);
-          setProgress(100);
-          setUploadedImage(response.data.filePath); 
-          setValue('profile_image', response.data.filePath);
-          toast.success('File uploaded successfully!');
-          clearErrors('profile_image');
-        } catch (error) {
-          clearInterval(progressInterval);
-          setProgress(0);
-          toast.error('File upload failed.');
-        } finally {
-          setIsUploading(false);
-        }
-      };
-    
-      const openFileDialog = () => {
-        if (fileInputRef.current) {
-          fileInputRef.current.click();
-        }
-      };
-    
-      const handleRedirect = () => {
-        navigate('/dashboard/user');
-      };  
+        toast.error('File upload failed.');
+      } finally {
+        setIsUploading(false);
+      }
+    };
+  
+    const openFileDialog = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
+  
+    const handleRedirect = () => {
+      navigate('/dashboard/user');
+    };  
 
   return (
     <>
       <h2 className='main_title'>Add User</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
-      <div className='form_group'>
+        <div className='form_group'>
           <div className='custom_upload' onClick={openFileDialog}>
               {!isUploading && !uploadedImage && (
                 <div className='upload_cover'>

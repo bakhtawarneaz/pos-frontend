@@ -6,7 +6,7 @@ import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
-import { createUser, deleteUser } from '@api/userApi';
+import { createUser, updateUser, deleteUser } from '@api/userApi';
 import { createRole, deleteRole } from '@api/roleApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
@@ -460,6 +460,23 @@ export function useCreateUser(navigate, reset) {
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to create user.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+export function useUpdateUser(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateUser,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'User created!');
+      reset();
+      navigate('/dashboard/user'); 
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update user.';
       toast.error(errorMessage);
     },
  });

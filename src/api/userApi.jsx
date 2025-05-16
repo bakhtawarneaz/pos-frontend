@@ -5,6 +5,11 @@ export const createUser = async (data) => {
     return response.data;
 };
 
+export const updateUser = async (data) => {
+    const response = await api.post('/users/update', data);
+    return response.data;
+};
+
 export const getUser = async ({ page = 1, perPage = 10 }) => {
     const response = await api.post('/users/fetch', { page, perPage });
     return response.data;
