@@ -74,19 +74,19 @@ export function useFetchInvoice(filters) {
 }
 
 /** User **/
-export function useFetchUser(filters) {
+export function useFetchUser({ page, perPage }) {
     return useQuery({
-        queryKey: ['user', filters],
-        queryFn: () => getUser(filters),
+        queryKey: ['user', page, perPage],
+        queryFn: () => getUser({ page, perPage }),
         staleTime: 60 * 60 * 1000,
     });
 }
 
 /** Role **/
-export function useFetchRole() {
+export function useFetchRole({ page, perPage }) {
     return useQuery({
-        queryKey: ['role'],
-        queryFn: () => getRole(),
+        queryKey: ['role', page, perPage],
+        queryFn: () => getRole({ page, perPage }),
         staleTime: 60 * 60 * 1000,
     });
 }

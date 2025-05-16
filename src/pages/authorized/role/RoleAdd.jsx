@@ -1,7 +1,6 @@
 import React from 'react'
 
 /* packages...*/
-import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 

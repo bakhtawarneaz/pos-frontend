@@ -7,7 +7,7 @@ import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
 import { createUser, deleteUser } from '@api/userApi';
-import { createRole } from '@api/roleApi';
+import { createRole, deleteRole } from '@api/roleApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 
@@ -499,3 +499,20 @@ export function useCreateRole(navigate, reset) {
     },
  });
 }
+
+
+export const useDeleteRole = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteRole,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['role']);
+      toast.success(data?.message || 'Role deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted role.';
+      toast.error(errorMessage);
+    },
+  });
+};

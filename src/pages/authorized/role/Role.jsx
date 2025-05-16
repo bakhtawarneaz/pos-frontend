@@ -2,53 +2,66 @@ import React, { useMemo, useState } from 'react'
 
 /* components...*/
 import TableComponent from '@components/TableComponent';
+import ModalComponent from '@components/ModalComponent';
+import ButtonLoader from '@components/ButtonLoader';
 
 /* icons...*/
 import { FiPlus } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
+import { FiAlertTriangle } from "react-icons/fi";
+
+/* styles...*/
+import '@styles/_product.css'
 
 /* hooks... */
 import { useFetchRole } from '@hooks/useQuery';
+import { useDeleteRole } from '@hooks/useMutation';
 
 /* packages...*/
-import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Role = () => {
 
   /* State */
+  const [page, setPage] = useState(1);
+  const perPage = 5;
   const [searchTerm, setSearchTerm] = useState("");
   const [isReloading, setIsReloading] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deletingRole, setDeletingRole] = useState(null);
 
   const queryClient = useQueryClient();
 
   /* Hooks...*/
   const navigate = useNavigate();
 
-/* Mutations */
-   const createMutation = useCreateRole(reset, closeModal);
-   const deleteMutation = useDeleteRole(closeDeleteModal);
-
   /* Queries */
-  const { data: roleData, isLoading: isRoleLoading } = useFetchRole();
-  const role = roleData?.data || [];
+  const { data: roleData, isLoading: isRoleLoading } = useFetchRole({ page, perPage });
+  const role = roleData?.data?.data || [];
   const meta = roleData?.data?.meta || {};
-  
+
+  /* Mutations */
+  const deleteMutation = useDeleteRole(closeDeleteModal);
 
 
-  const openDeleteModal = (area) => {
-    setDeletingArea(area);
+  const openDeleteModal = (role) => {
+    setDeletingRole(role);
     setDeleteModalOpen(true);
   };
 
   function closeDeleteModal() {
-    setDeletingArea(null);
+    setDeletingRole(null);
     setDeleteModalOpen(false);
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(deletingArea.id);
+    deleteMutation.mutate(deletingRole.id);
+  };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
 
   /* Filter...*/
@@ -58,10 +71,6 @@ const Role = () => {
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
   }, [searchTerm, role]);
-
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
 
   const handleReload = async () => {
     try {
@@ -75,21 +84,21 @@ const Role = () => {
   const handleRedirect = () => {
     navigate('/dashboard/role/role-add');
   };
-  
-    const columns = [
-          { key: "id", label: "ID" },
-          { key: "name", label: "Role Name" },
-          { key: "description", label: "Role Description" },
-      ];
+
+  const columns = [
+      { key: "id", label: "ID" },
+      { key: "name", label: "Role Name" },
+      { key: "description", label: "Role Description" },
+  ];
 
   return (
-<>
+    <>
       {/* Table */}
       <div className='card'>
         <div className='card_header'>
           <div className='top'>
             <div className='left'> 
-              <h2>roles <span>({meta.total || 0})</span></h2>
+              <h2>Roles <span>({meta.total || 0})</span></h2>
             </div>
             <div className='right'> 
               <div className='btn_reload' onClick={handleReload}>
@@ -118,27 +127,29 @@ const Role = () => {
               data={filteredData || []}
               showSummary = {true}
               showPagination={true}
-              isLoading={isRoleLoading}
               totalPages={meta.totalPages || 0}
               currentPage={meta.currentPage || 1}
               perPage={meta.perPage || 10}
               totalRecords={meta.total || 0}
               onPageChange={handlePageChange}
+              onDelete={openDeleteModal}
+              isLoading={isRoleLoading}
+              showDeleteAction={true}
+              showEditAction={false}
             />
         </div>
       </div>
-      {/* Modal */}
       <ModalComponent isOpen={deleteModalOpen} onClose={closeDeleteModal}>
-      <h2><FiAlertTriangle /> Delete Area</h2>
-      <p>Are you sure you want to delete <strong>{deletingArea?.area_name}</strong>?</p>
-      
-      <div className='form_btn_cover'>
-        <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
-        <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMutation.isPending}>
-          {deleteMutation.isPending ? <ButtonLoader /> : "Delete"}
-        </button>
-      </div>
-    </ModalComponent>
+        <h2><FiAlertTriangle /> Delete role</h2>
+        <p>Are you sure you want to role <strong>{deletingRole?.name}</strong>?</p>
+        
+        <div className='form_btn_cover'>
+          <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
+          <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMutation.isPending}>
+            {deleteMutation.isPending ? <ButtonLoader /> : "Delete"}
+          </button>
+        </div>
+      </ModalComponent>
     </>
   )
 }
