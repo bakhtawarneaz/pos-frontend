@@ -53,6 +53,7 @@ const UserAdd = () => {
       setValue('full_name', user.full_name);
       setValue('number', user.number);
       setValue('dob', user.dob);
+      setValue('product_img', user.product_img);
       setValue('primary_color', user.primary_color);
       setValue('role_id', user.role_id);
       setUploadedImage(user.fileUrl);
