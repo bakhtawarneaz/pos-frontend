@@ -93,7 +93,7 @@ const User = () => {
         />,
       },
       { key: "full_name", label: "Full Name" },
-      { key: "role_name", label: "Role Name" },
+      { key: "role_name", label: "Role" },
       { key: "username", label: "User Name" },
       { key: "email", label: "Email" },
       { key: "number", label: "Number" },
