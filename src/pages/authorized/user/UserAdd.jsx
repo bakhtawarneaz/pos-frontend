@@ -48,14 +48,13 @@ const UserAdd = () => {
       /* Effects */
   useEffect(() => {
     if (isEdit && user) {
-      setValue('name', user.name);
-      setValue('code', user.code);
-      setValue('address', user.address);
-      setValue('party_type', user.party_type);
-      setValue('contact_no', user.contact_no);
-      setValue('proprietor', user.proprietor);
-      setValue('area_id', user.area_id);
-      setValue('running_balance', user.running_balance);
+      setValue('username', user.username);
+      setValue('email', user.email);
+      setValue('full_name', user.full_name);
+      setValue('number', user.number);
+      setValue('dob', user.dob);
+      setValue('primary_color', user.primary_color);
+      setValue('role_id', user.role_id);
       setUploadedImage(user.fileUrl);
     }
   }, [isEdit, user, setValue]);
