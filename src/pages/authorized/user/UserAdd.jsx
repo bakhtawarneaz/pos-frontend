@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { MuiColorInput, matchIsValidColor } from 'mui-color-input'
+import { isValid } from 'date-fns';
 
 /* hooks... */
 import { useCreateUser, useUpdateUser } from '@hooks/useMutation';
@@ -52,35 +53,34 @@ const UserAdd = () => {
     
       /* Effects */
   useEffect(() => {
-    if (isEdit && user) {
+    if (isEdit && user && role.length > 0) {
       setValue('username', user.username);
       setValue('email', user.email);
       setValue('full_name', user.full_name);
       setValue('number', user.number);
-      if (user.dob) {
-        const [day, month, year] = user.dob.split('-');
-        const formattedDob = `${year}-${month}-${day}`;
-        setValue('dob', formattedDob);
+      if (user.dob && isValid(new Date(user.dob))) {
+        setValue('dob', user.dob);
       }
       setValue('profile_image', user.profile_image);
-      setValue('primary_color', user.primary_color);
+      setValue('primary_color', user.primary_color || '#f43f5e');
       setValue('role_id', user.role_id);
       setUploadedImage(user.profile_image);
     }
-  }, [isEdit, user, setValue]);
+  }, [isEdit, user, role, setValue]);
 
     /* Functions Here...*/
     const onSubmit = (data) => {
-      if (isEdit  && user) {
-           const PAY_LOAD = {
-             ...data,
-             id: user.id,
-         };
-         updateMutation.mutate(PAY_LOAD);
-       } else {
-         createMutation.mutate(data);
-       }
-   };
+      const PAY_LOAD = {
+        ...data,
+        active: isEdit ? user.active : true,
+      };
+      if (isEdit && user) {
+        PAY_LOAD.userId = user.id;
+        updateMutation.mutate(PAY_LOAD);
+      } else {
+        createMutation.mutate(PAY_LOAD);
+      }
+    };
 
     function handleResetUpload() {
       setUploadedImage('');  

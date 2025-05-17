@@ -19,3 +19,13 @@ export const deleteUser = async (data) => {
     const response = await api.post('/users/toggle-active', data);
     return response.data;
 };
+
+export const updateProfile = async (payload) => {
+  const response = await api.post('/users/profile', payload);
+  return response.data;
+};
+
+export const changePassword = async (payload) => {
+  const response = await api.post('/users/change-password', payload);
+  return response.data;
+};

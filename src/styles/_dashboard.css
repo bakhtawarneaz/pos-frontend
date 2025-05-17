@@ -130,7 +130,9 @@
 
 .side_profile .avatar {
     width: 40px;
+    height: 40px;
     border-radius: 50px;
+    object-fit: cover;
 }
 
 .side_profile .content .name {
@@ -356,7 +358,9 @@
 
 .user-info .avatar {
     width: 40px;
+    height: 40px;
     border-radius: 50px;
+    object-fit: cover;
 }
 
 .user-text .name {

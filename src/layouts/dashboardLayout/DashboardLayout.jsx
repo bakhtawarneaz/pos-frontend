@@ -12,7 +12,7 @@ import { CgProfile } from "react-icons/cg";
 import { SlSupport } from "react-icons/sl";
 
 /* packages...*/
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 
 /* styles...*/
 import '@styles/_dashboard.css'
@@ -35,6 +35,7 @@ import Fav from  '@assets/fav.png';
 
 const DashboardLayout = () => {
   const { token, user, logout } = useUserStore();
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
@@ -50,6 +51,14 @@ const DashboardLayout = () => {
   const handleLogout = () => logout()
   const toggleSidebar = () => setIsSidebarCollapsed((prev) => !prev)
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const handleProfileRedirect = () => {
+    navigate('/dashboard/profile');
+  };
+
+  const handlePasswordRedirect = () => {
+    navigate('/dashboard/change-password');
+  };
 
   return (
     <div className='site-wraper'>
@@ -112,8 +121,12 @@ const DashboardLayout = () => {
                 <div className="dropdown">
                   <div className="dropdown-item"><SlSupport /> Support</div>
                   <div className="dropdown-item"><IoSettingsOutline /> Settings</div>
-                  <div className="dropdown-item"><CgProfile /> Profile</div>
-                  <div className="dropdown-item"><RiLockPasswordLine /> Change Password</div>
+                  {user?.role_id == 2 && (
+                    <div className="dropdown-item" onClick={handleProfileRedirect}>
+                      <CgProfile /> Profile
+                    </div>
+                  )}
+                  <div className="dropdown-item" onClick={handlePasswordRedirect}><RiLockPasswordLine /> Change Password</div>
                   <div className="dropdown-item" onClick={handleLogout}><IoIosLogOut /> Log out</div>
                 </div>
               )}

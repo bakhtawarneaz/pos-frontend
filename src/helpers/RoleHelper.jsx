@@ -4,7 +4,7 @@ export const getMenuByRole = (roleId) => {
         case 1: 
             return ['Dashboard', 'Product', 'Product Tracking', 'Brand', 'Customer', 'Employee', 'Invoice', 'Voucher', 'Area', 'Bank', 'User', 'Role'];
         case 2:
-            return ['Dashboard', 'Invoice', 'Report', 'Voucher'];
+            return ['Dashboard', 'Invoice', 'Voucher'];
         default:
             return [];
     }

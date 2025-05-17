@@ -29,6 +29,8 @@ import Role from '@authPages/role/Role';
 
 import ProductAdd from '@authPages/product/ProductAdd';
 import ProductTracking from '@authPages/product/ProductTracking';
+import Profile from '@authPages/profile/Profile';
+import ChangePassword from '@authPages/changePassword/ChangePassword';
 import BankAdd from '@authPages/bank/BankAdd';
 import EmployeeAdd from '@authPages/employee/EmployeeAdd';
 import BrandAdd from '@authPages/brand/BrandAdd';
@@ -136,6 +138,8 @@ const router = createBrowserRouter([
             { path: 'voucher', element: <ProtectedRoute element={<Voucher />} allowedRoles={[1, 2]} /> },
             { path: 'report', element: <ProtectedRoute element={<Report />} allowedRoles={[1, 2]} /> },
             { path: 'product-tracking', element: <ProtectedRoute element={<ProductTracking />} allowedRoles={[1, 2]} /> },
+            { path: 'profile', element: <ProtectedRoute element={<Profile />} allowedRoles={[2]} /> },
+            { path: 'change-password', element: <ProtectedRoute element={<ChangePassword />} allowedRoles={[1, 2]} /> },
         ],
         errorElement: <NotFound />,
     },

@@ -402,6 +402,14 @@
     font-size: 14px;
 }
 
+.middle_form_group.password_group {
+    grid-template-columns: 1fr;
+}
+
+.middle_form_group.password_group .form_group .form_control {
+    width: 33%;
+}
+
 form .error {
     font-family: var(--family);
     font-weight: 400;

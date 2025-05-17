@@ -6,11 +6,11 @@ import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
-import { createUser, updateUser, deleteUser } from '@api/userApi';
+import { createUser, updateUser, deleteUser, updateProfile, changePassword } from '@api/userApi';
 import { createRole, deleteRole } from '@api/roleApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
-
+import useUserStore from '@/stores/useUserStore';
 
 /** Login **/
 export function useLogin(navigate, setLoading) {
@@ -493,6 +493,41 @@ export const useDeleteUser = () => {
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted user.';
       toast.error(errorMessage);
+    },
+  });
+};
+
+export const useUpdateProfile = (navigate, reset) => {
+
+  const setUser = useUserStore((state) => state.setUser);
+  const token = useUserStore((state) => state.token);
+
+  return useMutation({
+    mutationFn: updateProfile,
+    onSuccess: (res) => {
+      toast.success(res.message || 'Profile updated!');
+      if (res.data) {
+        setUser({ user: res.data, token });
+      }
+      reset();
+      navigate('/dashboard/home'); 
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || 'Profile update failed.');
+    },
+  });
+};
+
+export const useChangePassword = (navigate, reset) => {
+  return useMutation({
+    mutationFn: changePassword,
+    onSuccess: (res) => {
+      toast.success(res.message || 'Password changed successfully!');
+      reset();
+      navigate('/dashboard/home'); 
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || 'Failed to change password.');
     },
   });
 };
