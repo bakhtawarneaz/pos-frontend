@@ -11,7 +11,7 @@ import { BsBank } from "react-icons/bs";
 import { FaRegChartBar } from "react-icons/fa";
 import { FiFilter } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
-import { FaUsersRays } from "react-icons/fa6";
+import { FaUserLock } from "react-icons/fa6";
 
 /* helpers...*/
 import { getDynamicPath } from '@helper/PathHelper';
@@ -80,6 +80,6 @@ export const MenuItems = [
     {
         title: 'Role',
         path: getDynamicPath('/role'),
-        icon: <FaUsersRays />,
+        icon: <FaUserLock />,
     },
   ];

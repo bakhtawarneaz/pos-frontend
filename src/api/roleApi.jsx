@@ -11,6 +11,11 @@ export const createRole = async (data) => {
     return response.data;
 };
 
+export const updateRole = async (data) => {
+    const response = await api.put(`/roles/update/${data.id}`, data);
+    return response.data;
+};
+
 export const deleteRole = async (id) => {
     const response = await api.delete(`/roles/delete/${id}`);
     return response.data;

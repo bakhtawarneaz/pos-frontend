@@ -3,18 +3,21 @@ import React, { useMemo, useState } from 'react'
 /* components...*/
 import TableComponent from '@components/TableComponent';
 import Switch from '@components/Switch';
+import ModalComponent from '@components/ModalComponent';
+import ButtonLoader from '@components/ButtonLoader';
 
 /* icons...*/
 import { FiPlus } from "react-icons/fi";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
+import { FiAlertTriangle } from "react-icons/fi";
 
 /* styles...*/
 import '@styles/_product.css'
 
 /* hooks... */
 import { useFetchUser } from '@hooks/useQuery';
-import { useDeleteUser } from '@hooks/useMutation';
+import { useDeleteUser, useMainDeleteUser } from '@hooks/useMutation';
 
 /* assets...*/
 import usericon from '@assets/user.png'
@@ -31,6 +34,8 @@ const User = () => {
   const perPage = 5;
   const [searchTerm, setSearchTerm] = useState("");
   const [isReloading, setIsReloading] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deletingUser, setDeletingUser] = useState(null);
 
   const queryClient = useQueryClient();
 
@@ -44,6 +49,21 @@ const User = () => {
 
   /* Mutations */
   const deleteMutation = useDeleteUser();
+  const deleteMainMutation = useMainDeleteUser(closeDeleteModal);
+
+   const openDeleteModal = (user) => {
+    setDeletingUser(user);
+    setDeleteModalOpen(true);
+  };
+
+  function closeDeleteModal() {
+    setDeletingUser(null);
+    setDeleteModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    deleteMainMutation.mutate(deletingUser.id);
+  };
 
   const handleToggle = (id, active) => {
     const PAY_LOAD = {
@@ -156,11 +176,24 @@ const User = () => {
               perPage={meta.perPage || 10}
               totalRecords={meta.total || 0}
               onPageChange={handlePageChange}
+              onDelete={openDeleteModal}
               onEdit={handleEdit}
+              showDeleteAction={true}
               isLoading={isUserLoading}
             />
         </div>
       </div>
+      <ModalComponent isOpen={deleteModalOpen} onClose={closeDeleteModal}>
+        <h2><FiAlertTriangle /> Delete user</h2>
+        <p>Are you sure you want to user <strong>{deletingUser?.username}</strong>?</p>
+        
+        <div className='form_btn_cover'>
+          <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
+          <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMainMutation.isPending}>
+            {deleteMainMutation.isPending ? <ButtonLoader /> : "Delete"}
+          </button>
+        </div>
+      </ModalComponent>
     </>
   )
 }

@@ -1,28 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 /* packages...*/
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 /* hooks... */
-import { useCreateRole } from '@hooks/useMutation';
+import { useCreateRole, useUpdateRole } from '@hooks/useMutation';
 
 /* components...*/
 import ButtonLoader from '@components/ButtonLoader';
 
+
 const RoleAdd = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
 
     /* Hooks...*/
+    const location = useLocation();
     const navigate = useNavigate();
     
+    const { role, isEdit } = location.state || {};
+
     /* Mutations */
     const createMutation = useCreateRole(navigate, reset);
+    const updateMutation = useUpdateRole(navigate, reset);
+
+    /* Effects */
+    useEffect(() => {
+      if (isEdit && role) {
+        setValue('name', role.name);
+        setValue('description', role.description);
+      }
+    }, [isEdit, role, setValue]);
 
     /* Functions Here...*/
     const onSubmit = (data) => {
-       createMutation.mutate(data);
+      if (isEdit  && role) {
+          const PAY_LOAD = {
+            ...data,
+            id: role.id,
+        };
+        updateMutation.mutate(PAY_LOAD);
+      } else {
+        createMutation.mutate(data);
+      }
     };
     
     const handleRedirect = () => {
@@ -48,11 +69,11 @@ const RoleAdd = () => {
 
         <div className='form_btn_cover'>
           <button type="button" className='cancel' onClick={handleRedirect}>cancel</button>
-          <button type="submit" className='btn' disabled={createMutation.isPending}>
-            {createMutation.isPending ? (
+          <button type="submit" className='btn' disabled={isEdit ? updateMutation.isPending : createMutation.isPending}>
+            {(isEdit ? updateMutation.isPending : createMutation.isPending) ? (
               <ButtonLoader />
             ) : (
-              'Create'
+              isEdit ? 'Update' : 'Create'
             )}
           </button>
         </div>

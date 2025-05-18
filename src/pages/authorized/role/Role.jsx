@@ -81,6 +81,10 @@ const Role = () => {
     }
   };
 
+  const handleEdit = (row) => {
+    navigate('/dashboard/role/role-add', { state: { role: row, isEdit: true } });
+  };
+
   const handleRedirect = () => {
     navigate('/dashboard/role/role-add');
   };
@@ -135,7 +139,7 @@ const Role = () => {
               onDelete={openDeleteModal}
               isLoading={isRoleLoading}
               showDeleteAction={true}
-              showEditAction={false}
+              onEdit={handleEdit}
             />
         </div>
       </div>

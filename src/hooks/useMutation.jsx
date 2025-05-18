@@ -6,8 +6,8 @@ import { createBrand, updateBrand, deleteBrand } from '@api/brandApi';
 import { createCustomer, updateCustomer, deleteCustomer } from '@api/customerApi';
 import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi';
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
-import { createUser, updateUser, deleteUser, updateProfile, changePassword } from '@api/userApi';
-import { createRole, deleteRole } from '@api/roleApi';
+import { createUser, updateUser, deleteUser, updateProfile, changePassword, mainDeleteUser } from '@api/userApi';
+import { createRole, updateRole, deleteRole } from '@api/roleApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 import useUserStore from '@/stores/useUserStore';
@@ -488,7 +488,7 @@ export const useDeleteUser = () => {
     mutationFn: deleteUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries(['user']);
-      toast.success(data?.message || 'User deleted successfully!');
+      toast.success(data?.message || 'User activate successfully!');
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted user.';
@@ -532,6 +532,22 @@ export const useChangePassword = (navigate, reset) => {
   });
 };
 
+export const useMainDeleteUser = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: mainDeleteUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['user']);
+      toast.success(data?.message || 'User deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted user.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
 
 /** Role **/
 
@@ -551,6 +567,24 @@ export function useCreateRole(navigate, reset) {
     },
  });
 }
+
+
+export const useUpdateRole = (navigate, reset) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateRole, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['role']); 
+      toast.success(data?.message || 'Role updated!');
+      navigate('/dashboard/role');
+      reset(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update role.';
+      toast.error(errorMessage);
+    },
+  });
+};
 
 
 export const useDeleteRole = (closeDeleteModal) => {

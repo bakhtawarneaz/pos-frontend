@@ -454,3 +454,16 @@ footer p {
     font-family: var(--family);
     font-weight: 400;
 }
+
+
+
+/************** Media Queries ****************/
+@media (max-width: 1366px) {
+    .sidebar_menu li a {
+        padding: 8px 10px;
+    }
+
+    .sidebar_menu li a span {
+        font-size: 12px;
+    }
+}

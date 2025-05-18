@@ -29,3 +29,8 @@ export const changePassword = async (payload) => {
   const response = await api.post('/users/change-password', payload);
   return response.data;
 };
+
+export const mainDeleteUser = async (id) => {
+    const response = await api.delete(`/users/delete/${id}`);
+    return response.data;
+};

@@ -149,16 +149,16 @@ const Bank = () => {
         </div>
       </div>
       <ModalComponent isOpen={deleteModalOpen} onClose={closeDeleteModal}>
-      <h2><FiAlertTriangle /> Delete bank</h2>
-      <p>Are you sure you want to delete <strong>{deletingBank?.bank_name}</strong>?</p>
-      
-      <div className='form_btn_cover'>
-        <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
-        <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMutation.isPending}>
-          {deleteMutation.isPending ? <ButtonLoader /> : "Delete"}
-        </button>
-      </div>
-    </ModalComponent>
+        <h2><FiAlertTriangle /> Delete bank</h2>
+        <p>Are you sure you want to delete <strong>{deletingBank?.bank_name}</strong>?</p>
+        
+        <div className='form_btn_cover'>
+          <button type="button" className='cancel' onClick={closeDeleteModal}>Cancel</button>
+          <button type="button" className='btn delete' onClick={handleDelete} disabled={deleteMutation.isPending}>
+            {deleteMutation.isPending ? <ButtonLoader /> : "Delete"}
+          </button>
+        </div>
+      </ModalComponent>
     </>
   )
 }
