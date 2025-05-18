@@ -12,9 +12,6 @@ import { LuRefreshCw } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 
-/* styles...*/
-import '@styles/_product.css'
-
 /* hooks... */
 import { useFetchInvoice } from '@hooks/useQuery';
 import { useFetchBrand } from '@hooks/useQuery';

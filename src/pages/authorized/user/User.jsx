@@ -12,9 +12,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import { LuRefreshCw } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
 
-/* styles...*/
-import '@styles/_product.css'
-
 /* hooks... */
 import { useFetchUser } from '@hooks/useQuery';
 import { useDeleteUser, useMainDeleteUser } from '@hooks/useMutation';
