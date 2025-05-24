@@ -33,8 +33,8 @@ const InvoiceAdd = () => {
     control,
     name: 'details'
   });
-  const invoiceType = watch('type');
-  const invoiceMode = watch('invoice_type');
+  const invoiceType = watch('invoice_type');
+  const invoiceMode = watch('invoice_mode');
   const [runningBalance, setRunningBalance] = useState(0);
   
 
@@ -61,8 +61,8 @@ const InvoiceAdd = () => {
         toast.error('Please add at least one product item');
         return;
     }
+    const invoice_mode = parseInt(data.invoice_mode);
     const invoice_type = parseInt(data.invoice_type);
-    const type = parseInt(data.type);
     const type_id = parseInt(data.type_id);
     let cleanedDetails = [];
     if (invoice_type === '3' || invoice_type === '4') {
@@ -82,8 +82,8 @@ const InvoiceAdd = () => {
     }
     const PAY_LOAD = {
         ...data,
+        invoice_mode,
         invoice_type,
-        type,
         type_id,
         details: cleanedDetails
     };
@@ -116,16 +116,16 @@ const InvoiceAdd = () => {
 
 const handleInvoiceTypeChange = (e) => {
     const type = e.target.value;
-    setValue('type', type);
-    clearErrors('type');
+    setValue('invoice_type', type);
+    clearErrors('invoice_type');
     setValue('type_id', '');
     setRunningBalance(0);
 };
 
 const handleInvoiceModeChange = (e) => {
     const selectedMode = e.target.value;
-    setValue('invoice_type', selectedMode); 
-    clearErrors('invoice_type');  
+    setValue('invoice_mode', selectedMode); 
+    clearErrors('invoice_mode');  
     clearErrors('reason');                   
     setValue('reason', '');                 
 };
@@ -144,23 +144,23 @@ const handleRedirect = () => {
             <div className='left'>
                 <div className='form_group'>
                     <label>Invoice Mode</label>
-                    <select {...register('invoice_type', { required: true })} className='form_control' onChange={handleInvoiceModeChange}>
+                    <select {...register('invoice_mode', { required: true })} className='form_control' onChange={handleInvoiceModeChange}>
                     <option value="">Select Invoice Mode</option>
                     <option value="1">Purchase</option>
                     <option value="2">Sale</option>
                     <option value="3">Purchase Return</option>
                     <option value="4">Sale Return</option>
                     </select>
-                    {errors.invoice_type && <p className='error'>Invoice Mode is required</p>}
+                    {errors.invoice_mode && <p className='error'>Invoice Mode is required</p>}
                 </div>
                 <div className='form_group'>
                     <label>Invoice Type</label>
-                    <select {...register('type', { required: true })} className='form_control' onChange={handleInvoiceTypeChange}>
+                    <select {...register('invoice_type', { required: true })} className='form_control' onChange={handleInvoiceTypeChange}>
                     <option value="">Select Invoice Type</option>
                     <option value="1">Company</option>
                     <option value="2">Customer</option>
                     </select>
-                    {errors.type && <p className='error'>Invoice Type is required</p>}
+                    {errors.invoice_type && <p className='error'>Invoice Type is required</p>}
                 </div>
                 {invoiceType === '1' && (
                     <div className='form_group'>

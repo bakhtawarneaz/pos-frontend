@@ -189,7 +189,7 @@ const ProductAdd = () => {
           </div>
 
           <div className='form_group'>
-            <label>Quantity</label>
+            <label>Previous Quantity</label>
             <input type="text" placeholder='Quantity' {...register('qty', { required: true })} className='form_control' />
             {errors.qty && <p className='error'>Quantity is required</p>}
           </div>

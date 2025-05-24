@@ -113,7 +113,7 @@ const Invoice = () => {
       setFilters({
         page: 1,
         perPage,
-        invoice_type: invoiceModeFilter ? parseInt(invoiceModeFilter) : null,
+        invoice_mode: invoiceModeFilter ? parseInt(invoiceModeFilter) : null,
         brand_id: brandFilter ? parseInt(brandFilter) : null,
         customer_id: customerFilter ? parseInt(customerFilter) : null
       });
@@ -170,12 +170,12 @@ const Invoice = () => {
           ),
       },
       { 
-        key: "invoice_type", 
+        key: "invoice_mode", 
         label: "Invoice Mode",
         render: (row) => INVOICE_MODE_MAP[row.invoice_mode] || "-"
       },
       { 
-        key: "type", 
+        key: "invoice_type", 
         label: "Invoice Type",
         render: (row) => INVOICE_TYPE_MAP[row.invoice_type] || "-"
       },
