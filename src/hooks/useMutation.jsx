@@ -8,6 +8,7 @@ import { createEmployee, updateEmployee, deleteEmployee } from '@api/employeeApi
 import { createInvoice, deleteInvoice } from '@api/invoiceApi';
 import { createUser, updateUser, deleteUser, updateProfile, changePassword, mainDeleteUser } from '@api/userApi';
 import { createRole, updateRole, deleteRole } from '@api/roleApi';
+import { createVoucher, updateVoucher, deleteVoucher } from '@api/voucherApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
 import toast from 'react-hot-toast';
 import useUserStore from '@/stores/useUserStore';
@@ -598,6 +599,61 @@ export const useDeleteRole = (closeDeleteModal) => {
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message || 'Failed to deleted role.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+/** Voucher **/
+
+export function useCreateVoucher(navigate, reset) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createVoucher,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Voucher created!');
+      reset();
+      navigate('/dashboard/voucher'); 
+      queryClient.invalidateQueries({ queryKey: ['voucher'] });
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to create voucher.';
+      toast.error(errorMessage);
+    },
+ });
+}
+
+
+export const useUpdateVoucher = (navigate, reset) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateVoucher, 
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['voucher']); 
+      toast.success(data?.message || 'Voucher updated!');
+      navigate('/dashboard/voucher');
+      reset(); 
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to update voucher.';
+      toast.error(errorMessage);
+    },
+  });
+};
+
+
+export const useDeleteVoucher = (closeDeleteModal) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteVoucher,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['voucher']);
+      toast.success(data?.message || 'Voucher deleted successfully!');
+      closeDeleteModal();
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to deleted voucher.';
       toast.error(errorMessage);
     },
   });

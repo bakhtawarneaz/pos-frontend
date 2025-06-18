@@ -52,7 +52,7 @@ const RoleAdd = () => {
 
   return (
 <>
-      <h2 className='main_title'>Add Role</h2>
+      <h2 className='main_title'>{isEdit ? 'Edit Role' : 'Add Role'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='middle_form_group'>
           <div className='form_group'>

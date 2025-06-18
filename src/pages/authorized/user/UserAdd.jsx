@@ -138,7 +138,7 @@ const UserAdd = () => {
 
   return (
     <>
-      <h2 className='main_title'>Add User</h2>
+      <h2 className='main_title'>{isEdit ? 'Edit User' : 'Add User'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
           <div className='custom_upload' onClick={openFileDialog}>

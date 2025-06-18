@@ -134,7 +134,7 @@ const area = areaData?.data?.data || [];
 
   return (
 <>
-      <h2 className='main_title'>Add Customer</h2>
+      <h2 className='main_title'>{isEdit ? 'Edit Customer' : 'Add Customer'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
           <div className='pdf_upload' >

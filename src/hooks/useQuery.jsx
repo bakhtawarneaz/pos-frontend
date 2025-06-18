@@ -8,6 +8,7 @@ import { getBank } from '@api/bankApi';
 import { getInvoice } from '@api/invoiceApi';
 import { getUser } from '@api/userApi';
 import { getRole } from '@api/roleApi';
+import { getVoucher } from '@api/voucherApi';
 
 /** Organization **/
 export function useFetchProduct({ page, perPage }) {
@@ -87,6 +88,16 @@ export function useFetchRole({ page, perPage }) {
     return useQuery({
         queryKey: ['role', page, perPage],
         queryFn: () => getRole({ page, perPage }),
+        staleTime: 60 * 60 * 1000,
+    });
+}
+
+
+/** Voucher **/
+export function useFetchVoucher({ page, perPage }) {
+    return useQuery({
+        queryKey: ['voucher', page, perPage],
+        queryFn: () => getVoucher({ page, perPage }),
         staleTime: 60 * 60 * 1000,
     });
 }

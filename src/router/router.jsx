@@ -38,6 +38,7 @@ import CustomerAdd from '@authPages/customer/CustomerAdd';
 import InvoiceAdd from '@authPages/invoice/InvoiceAdd';
 import UserAdd from '@authPages/user/UserAdd';
 import RoleAdd from '@authPages/role/RoleAdd';
+import VoucherAdd from '@authPages/voucher/VoucherAdd';
 
 /************* Not Found Links *************/
 import NotFound from '@components/NotFound';
@@ -135,7 +136,13 @@ const router = createBrowserRouter([
                   { path: 'role-add', element: <ProtectedRoute element={<RoleAdd />} allowedRoles={[1, 2]} /> },
                 ],
             },
-            { path: 'voucher', element: <ProtectedRoute element={<Voucher />} allowedRoles={[1, 2]} /> },
+            {
+                path: 'voucher',
+                children: [
+                  { path: '', element: <ProtectedRoute element={<Voucher />} allowedRoles={[1, 2]} /> },
+                  { path: 'voucher-add', element: <ProtectedRoute element={<VoucherAdd />} allowedRoles={[1, 2]} /> },
+                ],
+            },
             { path: 'report', element: <ProtectedRoute element={<Report />} allowedRoles={[1, 2]} /> },
             { path: 'product-tracking', element: <ProtectedRoute element={<ProductTracking />} allowedRoles={[1, 2]} /> },
             { path: 'profile', element: <ProtectedRoute element={<Profile />} allowedRoles={[2]} /> },

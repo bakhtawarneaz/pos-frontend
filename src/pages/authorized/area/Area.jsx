@@ -171,7 +171,7 @@ const handleReload = async () => {
 
     {/* Modal */}
     <ModalComponent isOpen={isModalOpen} onClose={closeModal}>
-      <h2>{isEdit ? 'update area' : 'add area'}</h2>
+      <h2>{isEdit ? 'Edit Area' : 'Add Area'}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
   
           <div className='form_group'>

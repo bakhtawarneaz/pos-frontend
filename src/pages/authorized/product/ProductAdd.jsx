@@ -122,7 +122,7 @@ const ProductAdd = () => {
 
   return (
     <>
-      <h2 className='main_title'>Add Product</h2>
+      <h2 className='main_title'>{isEdit ? 'Edit Product' : 'Add Product'}</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='inner_form'>
         <div className='form_group'>
           <div className='custom_upload' onClick={openFileDialog}>
