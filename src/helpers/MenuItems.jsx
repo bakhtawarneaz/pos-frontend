@@ -52,11 +52,11 @@ export const MenuItems = [
         path: getDynamicPath('/invoice'),
         icon: <LiaFileInvoiceDollarSolid />,
     },
-    // {
-    //     title: 'Report',
-    //     path: getDynamicPath('/report'),
-    //     icon: <FaRegChartBar />,
-    // },
+    {
+        title: 'Ledger',
+        path: getDynamicPath('/ledger'),
+        icon: <FaRegChartBar />,
+    },
     {
         title: 'Voucher',
         path: getDynamicPath('/voucher'),

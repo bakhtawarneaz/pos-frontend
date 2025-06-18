@@ -23,7 +23,7 @@ import Product from '@authPages/product/Product';
 import Customer from '@authPages/customer/Customer';
 import Invoice from '@authPages/invoice/Invoice';
 import Voucher from '@authPages/voucher/Voucher';
-import Report from '@authPages/report/Report';
+import Ledger from '@authPages/ledger/Ledger';
 import User from '@authPages/user/User';
 import Role from '@authPages/role/Role';
 
@@ -143,7 +143,7 @@ const router = createBrowserRouter([
                   { path: 'voucher-add', element: <ProtectedRoute element={<VoucherAdd />} allowedRoles={[1, 2]} /> },
                 ],
             },
-            { path: 'report', element: <ProtectedRoute element={<Report />} allowedRoles={[1, 2]} /> },
+            { path: 'ledger', element: <ProtectedRoute element={<Ledger />} allowedRoles={[1, 2]} /> },
             { path: 'product-tracking', element: <ProtectedRoute element={<ProductTracking />} allowedRoles={[1, 2]} /> },
             { path: 'profile', element: <ProtectedRoute element={<Profile />} allowedRoles={[2]} /> },
             { path: 'change-password', element: <ProtectedRoute element={<ChangePassword />} allowedRoles={[1, 2]} /> },

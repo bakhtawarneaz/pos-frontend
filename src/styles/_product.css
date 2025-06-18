@@ -819,3 +819,27 @@ form .error {
     font-size: 14px;
     text-transform: capitalize;
 }
+
+
+.ledger_wrap form {
+    gap: 20px;
+}
+
+.ledger_wrap form .custom_date_picker {
+    display: flex;
+    flex-direction: column;
+}
+
+.ledger_wrap form .custom_date_picker .rmdp-container {
+    display: block;
+}
+
+.ledger_wrap form .custom_date_picker input.rmdp-input {
+    height: 38px;
+    width: 100%;
+}
+
+.ledger_wrap form .form_btn_cover {
+    width: auto;
+    padding-top: 15px;
+}

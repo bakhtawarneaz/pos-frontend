@@ -10,6 +10,7 @@ import { createUser, updateUser, deleteUser, updateProfile, changePassword, main
 import { createRole, updateRole, deleteRole } from '@api/roleApi';
 import { createVoucher, updateVoucher, deleteVoucher } from '@api/voucherApi';
 import { login, sendOtp, verifyOtp, resetPassword } from  '@api/authApi';
+import { getLedgerAll } from '@api/ledgerApi';
 import toast from 'react-hot-toast';
 import useUserStore from '@/stores/useUserStore';
 
@@ -658,3 +659,20 @@ export const useDeleteVoucher = (closeDeleteModal) => {
     },
   });
 };
+
+/** Ledger (Brand & Customer) **/
+export function useLedger(reset,onSuccessCallback) {
+  return useMutation({
+    mutationFn: getLedgerAll,
+    onSuccess: (data) => {
+      toast.success(data?.message || 'Ledger fetched!');
+      reset();
+      if (onSuccessCallback) onSuccessCallback(data?.data || {});
+    },
+    onError: (error) => {
+      const errorMessage = error?.response?.data?.message || 'Failed to fetch ledger.';
+      toast.error(errorMessage);
+    },
+  });
+}
+
