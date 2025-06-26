@@ -723,7 +723,7 @@ form .error {
 }
 
 .product_tracking_form {
-    margin: 20px 0;
+    margin: 0 0 20px;
 }
 
 .product_tracking_form form {
@@ -843,3 +843,44 @@ form .error {
     width: auto;
     padding-top: 15px;
 }
+
+.ledger_wrap .form_group {
+    flex: 1;
+}
+
+.form_header_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.form_header_buttons .btn {
+    padding: 10px 15px;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #e5e7eb;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.form_header_buttons .btn svg {
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.form_header_buttons .btn span {
+    color: #000;
+    font-family: var(--family);
+    font-weight: 400;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.form_header_buttons .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

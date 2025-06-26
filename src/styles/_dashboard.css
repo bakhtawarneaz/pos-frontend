@@ -458,7 +458,7 @@ footer p {
 
 
 /************** Media Queries ****************/
-@media (max-width: 1366px) {
+@media (max-width: 1600px) {
     .sidebar_menu li a {
         padding: 8px 10px;
     }
